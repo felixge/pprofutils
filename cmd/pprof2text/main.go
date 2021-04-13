@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
@@ -15,5 +16,11 @@ func main() {
 }
 
 func run() error {
+	versionF := flag.Bool("version", false, "Print version and exit.")
+	flag.Parse()
+	if *versionF {
+		fmt.Printf("%s\n", pprofutils.Version)
+		return nil
+	}
 	return pprofutils.PPROF2Text(os.Stdin, os.Stdout)
 }
