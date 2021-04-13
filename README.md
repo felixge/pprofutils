@@ -26,7 +26,7 @@ text2pprof < example.txt > example.pprof
 
 ## Tutorial: Generate a fake pprof profile
 
-My primary use case for this tool is to quickly generate fake pprof profiles, mostly for creating educational content.
+My primary use case for this tool is to quickly generate fake pprof profiles for creating educational content.
 
 This can be done by simply creating a file called `profile.txt` with the following content:
 
