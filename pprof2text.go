@@ -15,7 +15,8 @@ func PPROF2Text(pprof io.Reader, text io.Writer) error {
 	}
 	w := bufio.NewWriter(text)
 	for _, sample := range prof.Sample {
-		for i, loc := range sample.Location {
+		for i := range sample.Location {
+			loc := sample.Location[len(sample.Location)-i-1]
 			frame := loc.Line[0].Function.Name
 			w.WriteString(frame)
 			if i+1 < len(sample.Location) {

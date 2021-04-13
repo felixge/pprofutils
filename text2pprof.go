@@ -45,7 +45,8 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 		}
 
 		sample := &profile.Sample{Value: []int64{count}}
-		for _, frame := range stack {
+		for i := range stack {
+			frame := stack[len(stack)-i-1]
 			function := &profile.Function{
 				ID:   functionID,
 				Name: frame,

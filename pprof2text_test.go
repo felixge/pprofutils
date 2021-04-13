@@ -18,13 +18,13 @@ func TestPPROF2Text(t *testing.T) {
 	out := bytes.Buffer{}
 	is.NoErr(PPROF2Text(bytes.NewReader(data), &out))
 	want := strings.TrimSpace(`
-main.computeSum;main.run.func2;golang.org/x/sync/errgroup.(*Group).Go.func1 19
-runtime.asyncPreempt;main.computeSum;main.run.func2;golang.org/x/sync/errgroup.(*Group).Go.func1 5
-runtime.pthread_cond_wait;runtime.semasleep;runtime.notesleep;runtime.stopm;runtime.findrunnable;runtime.schedule;runtime.goschedImpl;runtime.gopreempt_m;runtime.mcall 1
-runtime.nanotime1;runtime.nanotime;runtime.findrunnable;runtime.schedule;runtime.park_m;runtime.mcall 1
-runtime.pthread_cond_wait;runtime.semasleep;runtime.notesleep;runtime.stopm;runtime.findrunnable;runtime.schedule;runtime.park_m;runtime.mcall 2
-runtime.write1;runtime.write;runtime.wakeNetPoller;runtime.modtimer;runtime.resettimer;runtime.park_m;runtime.mcall 7
-runtime.usleep;runtime.sysmon;runtime.mstart1;runtime.mstart 3
+golang.org/x/sync/errgroup.(*Group).Go.func1;main.run.func2;main.computeSum 19
+golang.org/x/sync/errgroup.(*Group).Go.func1;main.run.func2;main.computeSum;runtime.asyncPreempt 5
+runtime.mcall;runtime.gopreempt_m;runtime.goschedImpl;runtime.schedule;runtime.findrunnable;runtime.stopm;runtime.notesleep;runtime.semasleep;runtime.pthread_cond_wait 1
+runtime.mcall;runtime.park_m;runtime.schedule;runtime.findrunnable;runtime.nanotime;runtime.nanotime1 1
+runtime.mcall;runtime.park_m;runtime.schedule;runtime.findrunnable;runtime.stopm;runtime.notesleep;runtime.semasleep;runtime.pthread_cond_wait 2
+runtime.mcall;runtime.park_m;runtime.resettimer;runtime.modtimer;runtime.wakeNetPoller;runtime.write;runtime.write1 7
+runtime.mstart;runtime.mstart1;runtime.sysmon;runtime.usleep 3
 `) + "\n"
 	is.Equal(out.String(), want)
 }
