@@ -50,9 +50,9 @@ go tool pprof -http=:6060 profile.pprof
 
 The resulting graphs should look like this:
 
-![](./img/graph.png)
-
 ![](./img/flamegraph.png)
+
+![](./img/graph.png)
 
 ## License
 
