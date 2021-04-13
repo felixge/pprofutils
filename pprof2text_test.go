@@ -1,4 +1,4 @@
-package pprofutil
+package pprofutils
 
 import (
 	"bytes"

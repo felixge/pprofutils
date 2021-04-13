@@ -1,4 +1,4 @@
-package pprofutil
+package pprofutils
 
 import (
 	"fmt"
@@ -31,6 +31,9 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 		return err
 	}
 	for n, line := range strings.Split(string(lines), "\n") {
+		if strings.TrimSpace(line) == "" {
+			continue
+		}
 		i := strings.LastIndex(line, " ")
 		if i <= 0 {
 			return fmt.Errorf("bad line: %d: %q", n, line)

@@ -1,4 +1,4 @@
-module github.com/felixge/pprof-util
+module github.com/felixge/pprofutils
 
 go 1.16
 

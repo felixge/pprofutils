@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	pprofutil "github.com/felixge/pprof-util"
+	"github.com/felixge/pprofutils"
 )
 
 func main() {
@@ -15,5 +15,5 @@ func main() {
 }
 
 func run() error {
-	return pprofutil.PPROF2Text(os.Stdin, os.Stdout)
+	return pprofutils.Text2PPROF(os.Stdin, os.Stdout)
 }
