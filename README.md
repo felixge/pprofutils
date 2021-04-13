@@ -1,6 +1,6 @@
 # pprofutils
 
-pprofutils provide command line utilities for converting pprof files to Brendan Gregg's [folded text](https://github.com/brendangregg/FlameGraph#2-fold-stacks) format and vice versa.
+pprofutils provides command line utilities for converting pprof files to Brendan Gregg's [folded text](https://github.com/brendangregg/FlameGraph#2-fold-stacks) format and vice versa.
 
 ## Install
 
@@ -23,3 +23,7 @@ Convert a text file to pprof:
 ```
 text2pprof < example.txt > example.pprof
 ```
+
+## License
+
+pprofutils is licensed under the MIT License.
