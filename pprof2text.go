@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/google/pprof/profile"
 )
@@ -15,15 +16,15 @@ func PPROF2Text(pprof io.Reader, text io.Writer) error {
 	}
 	w := bufio.NewWriter(text)
 	for _, sample := range prof.Sample {
+		var frames []string
 		for i := range sample.Location {
 			loc := sample.Location[len(sample.Location)-i-1]
-			frame := loc.Line[0].Function.Name
-			w.WriteString(frame)
-			if i+1 < len(sample.Location) {
-				w.WriteString(";")
+			for j := range loc.Line {
+				line := loc.Line[len(loc.Line)-j-1]
+				frames = append(frames, line.Function.Name)
 			}
 		}
-		fmt.Fprintf(w, " %d\n", sample.Value[0])
+		fmt.Fprintf(w, "%s %d\n", strings.Join(frames, ";"), sample.Value[0])
 	}
 	return w.Flush()
 }
