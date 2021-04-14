@@ -1,6 +1,6 @@
 # Contributing
 
-The commands below might be useful for contributors, including myself : ).
+The commands below might be useful for contributors, including myself after forgetting them : ).
 
 ```
 # run tests
