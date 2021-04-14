@@ -7,7 +7,7 @@ pprofutils provides command line utilities for converting [pprof files](https://
 pprofutils requires Go 1.16 and can be installed like this:
 
 ```
-go install github.com/felixge/pprofutils/cmd/...
+go install github.com/felixge/pprofutils/cmd/...@latest
 ```
 
 ## Usage
