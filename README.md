@@ -1,3 +1,5 @@
+[![documentation](http://img.shields.io/badge/godoc-reference-blue.svg)](https://pkg.go.dev/github.com/felixte/pprofutils)
+
 # pprofutils
 
 pprofutils provides command line utilities for converting [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md) to Brendan Gregg's [folded text](https://github.com/brendangregg/FlameGraph#2-fold-stacks) format and vice versa.
