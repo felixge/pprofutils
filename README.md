@@ -28,6 +28,12 @@ text2pprof < example.txt > example.pprof
 
 Warning: Converting from pprof to text is lossy. Only the first sample type will be converted, file names, lines, labels, and more will be dropped. Patches to make things less lossy would be welcome, but please open an issue first to discuss.
 
+Create a delta profile that contains the difference between `heap-b.pprof - heap-a.pprof`:
+
+```
+pprofdelta -o delta.pprof heap-a.pprof heap-b.pprof
+```
+
 ## Tutorial: Generate a fake pprof profile
 
 My primary use case for this tool is to quickly generate fake pprof profiles for creating educational content.
