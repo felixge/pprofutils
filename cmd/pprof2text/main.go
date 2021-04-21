@@ -16,11 +16,14 @@ func main() {
 }
 
 func run() error {
-	versionF := flag.Bool("version", false, "Print version and exit.")
+	var (
+		versionF         = flag.Bool("version", false, "Print version and exit.")
+		multiSampleTypes = flag.Bool("m", false, "Extract multiple sample types and write header for them.")
+	)
 	flag.Parse()
 	if *versionF {
 		fmt.Printf("%s\n", pprofutils.Version)
 		return nil
 	}
-	return pprofutils.PPROF2Text(os.Stdin, os.Stdout)
+	return pprofutils.PPROF2TextConfig{SampleTypes: *multiSampleTypes}.Convert(os.Stdin, os.Stdout)
 }

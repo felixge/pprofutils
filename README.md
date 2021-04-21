@@ -64,6 +64,21 @@ The resulting graphs should look like this:
 
 ![](./img/graph.png)
 
+## Custom Extension: Multiple Sample Types
+
+The `text2pprof` command supports a custom extension to the folded text format that allows users to specify multiple sample types.
+
+This is done via a header that contains space separated `type/unit` sample types. The stack traces on the following lines must then contain one value for each sample type after the stack trace:
+
+```
+samples/count duration/nanoseconds
+main;foo 5 50000000
+main;foo;bar 3 30000000
+main;foobar 4 40000000
+```
+
+The `pprof2text` command also supports outputting this format by passing the `-m` flag.
+
 ## License
 
 pprofutils is licensed under the MIT License.

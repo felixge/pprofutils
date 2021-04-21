@@ -34,17 +34,39 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 		if strings.TrimSpace(line) == "" {
 			continue
 		}
-		i := strings.LastIndex(line, " ")
-		if i <= 0 {
-			return fmt.Errorf("bad line: %d: %q", n, line)
-		}
-		stack := strings.Split(line[0:i], ";")
-		count, err := strconv.ParseInt(line[i+1:], 10, 64)
-		if err != nil {
-			return fmt.Errorf("bad line: %d: %q: %w", n, line, err)
+
+		// custom extension: first line can contain header that looks like this:
+		// "samples/count duration/nanoseconds" to describe the sample types
+		if n == 0 && !containsDigit(line) {
+			p.SampleType = nil
+			for _, sampleType := range strings.Split(line, " ") {
+				parts := strings.Split(sampleType, "/")
+				if len(parts) != 2 {
+					return fmt.Errorf("bad header: %d: %q", n, line)
+				}
+				p.SampleType = append(p.SampleType, &profile.ValueType{
+					Type: parts[0],
+					Unit: parts[1],
+				})
+			}
+			continue
 		}
 
-		sample := &profile.Sample{Value: []int64{count}}
+		parts := strings.Split(line, " ")
+		if len(parts) != len(p.SampleType)+1 {
+			return fmt.Errorf("bad line: %d: %q", n, line)
+		}
+
+		stack := strings.Split(parts[0], ";")
+		sample := &profile.Sample{}
+		for _, valS := range parts[1:] {
+			val, err := strconv.ParseInt(valS, 10, 64)
+			if err != nil {
+				return fmt.Errorf("bad line: %d: %q: %w", n, line, err)
+			}
+			sample.Value = append(sample.Value, val)
+		}
+
 		for i := range stack {
 			frame := stack[len(stack)-i-1]
 			function := &profile.Function{
@@ -74,4 +96,13 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 		return err
 	}
 	return nil
+}
+
+func containsDigit(s string) bool {
+	for _, c := range s {
+		if c >= '0' && c <= '9' {
+			return true
+		}
+	}
+	return false
 }
