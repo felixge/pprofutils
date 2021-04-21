@@ -10,3 +10,8 @@ var (
 	version string
 	Version string = strings.TrimSpace(version)
 )
+
+type SampleType struct {
+	Type string
+	Unit string
+}
