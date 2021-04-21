@@ -16,5 +16,5 @@ echo "v0.3.0" > version.txt
 git add version.txt
 git commit -m "Release $(cat version.txt)"
 git tag $(cat version.txt)
-git push --tags
+git push --tags origin
 ```
