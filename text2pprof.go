@@ -37,7 +37,7 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 
 		// custom extension: first line can contain header that looks like this:
 		// "samples/count duration/nanoseconds" to describe the sample types
-		if n == 0 && !containsDigit(line) {
+		if n == 0 && looksLikeHeader(line) {
 			p.SampleType = nil
 			for _, sampleType := range strings.Split(line, " ") {
 				parts := strings.Split(sampleType, "/")
@@ -98,11 +98,14 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 	return nil
 }
 
-func containsDigit(s string) bool {
-	for _, c := range s {
-		if c >= '0' && c <= '9' {
-			return true
+// looksLikeHeader returns true if the line looks like this:
+// "samples/count duration/nanoseconds". The heuristic used for detecting this
+// is to check if every space separated value contains a "/" character.
+func looksLikeHeader(line string) bool {
+	for _, sampleType := range strings.Split(line, " ") {
+		if !strings.Contains(sampleType, "/") {
+			return false
 		}
 	}
-	return false
+	return true
 }
