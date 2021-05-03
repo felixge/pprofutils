@@ -16,10 +16,10 @@ main;foo 5
 main;foo;bar 3
 main;foobar 4
 `)
-		pprofOut := bytes.Buffer{}
-		is.NoErr(Text{}.Convert(strings.NewReader(textIn), &pprofOut))
+		proto, err := Text{}.Convert(strings.NewReader(textIn))
+		is.NoErr(err)
 		textOut := bytes.Buffer{}
-		is.NoErr(Protobuf{}.Convert(&pprofOut, &textOut))
+		is.NoErr(Protobuf{}.Convert(proto, &textOut))
 		is.Equal(textIn+"\n", textOut.String())
 	})
 
@@ -31,10 +31,10 @@ main;foo 5 50000000
 main;foo;bar 3 30000000
 main;foobar 4 40000000
 	`)
-		pprofOut := bytes.Buffer{}
-		is.NoErr(Text{}.Convert(strings.NewReader(textIn), &pprofOut))
+		proto, err := Text{}.Convert(strings.NewReader(textIn))
+		is.NoErr(err)
 		textOut := bytes.Buffer{}
-		is.NoErr(Protobuf{SampleTypes: true}.Convert(&pprofOut, &textOut))
+		is.NoErr(Protobuf{SampleTypes: true}.Convert(proto, &textOut))
 		is.Equal(textIn+"\n", textOut.String())
 	})
 }

@@ -13,20 +13,16 @@ type Protobuf struct {
 	SampleTypes bool
 }
 
-func (p Protobuf) Convert(pprof io.Reader, text io.Writer) error {
-	prof, err := profile.Parse(pprof)
-	if err != nil {
-		return err
-	}
+func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 	w := bufio.NewWriter(text)
 	if p.SampleTypes {
 		var sampleTypes []string
-		for _, sampleType := range prof.SampleType {
+		for _, sampleType := range protobuf.SampleType {
 			sampleTypes = append(sampleTypes, sampleType.Type+"/"+sampleType.Unit)
 		}
 		w.WriteString(strings.Join(sampleTypes, " ") + "\n")
 	}
-	for _, sample := range prof.Sample {
+	for _, sample := range protobuf.Sample {
 		var frames []string
 		for i := range sample.Location {
 			loc := sample.Location[len(sample.Location)-i-1]
