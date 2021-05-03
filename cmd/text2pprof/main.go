@@ -23,5 +23,9 @@ func run() error {
 		fmt.Printf("%s\n", internal.Version)
 		return nil
 	}
-	return pprofutils.Text{}.Convert(os.Stdin, os.Stdout)
+	outProf, err := pprofutils.Text{}.Convert(os.Stdin)
+	if err != nil {
+		return err
+	}
+	return outProf.Write(os.Stderr)
 }

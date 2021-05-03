@@ -9,6 +9,7 @@ import (
 
 	"github.com/felixge/pprofutils"
 	"github.com/felixge/pprofutils/internal"
+	"github.com/google/pprof/profile"
 )
 
 func main() {
@@ -51,17 +52,15 @@ func run() error {
 		}
 	}
 
-	profA, err := os.Open(flag.Arg(0))
+	profA, err := loadProfile(flag.Arg(0))
 	if err != nil {
 		return err
 	}
-	defer profA.Close()
 
-	profB, err := os.Open(flag.Arg(1))
+	profB, err := loadProfile(flag.Arg(1))
 	if err != nil {
 		return err
 	}
-	defer profB.Close()
 
 	out, err := os.Create(*outF)
 	if err != nil {
@@ -69,5 +68,18 @@ func run() error {
 	}
 	defer out.Close()
 
-	return config.Convert(profA, profB, out)
+	delta, err := config.Convert(profA, profB)
+	if err != nil {
+		return err
+	}
+	return delta.Write(out)
+}
+
+func loadProfile(path string) (*profile.Profile, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+	return profile.Parse(file)
 }
