@@ -25,5 +25,5 @@ func run() error {
 		fmt.Printf("%s\n", pprofutils.Version)
 		return nil
 	}
-	return pprofutils.PPROF2TextConfig{SampleTypes: *multiSampleTypes}.Convert(os.Stdin, os.Stdout)
+	return pprofutils.Protobuf{SampleTypes: *multiSampleTypes}.Convert(os.Stdin, os.Stdout)
 }

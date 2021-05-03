@@ -22,5 +22,5 @@ func run() error {
 		fmt.Printf("%s\n", pprofutils.Version)
 		return nil
 	}
-	return pprofutils.Text2PPROF(os.Stdin, os.Stdout)
+	return pprofutils.Text{}.Convert(os.Stdin, os.Stdout)
 }

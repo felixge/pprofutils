@@ -6,13 +6,13 @@ import (
 	"github.com/google/pprof/profile"
 )
 
-type DeltaConfig struct {
+type Delta struct {
 	// SampleTypes will limit delta calcultion to the given sample types. Other
 	// sample types will retain the values of profile b.
 	SampleTypes []SampleType
 }
 
-func (c DeltaConfig) Convert(a, b io.Reader, w io.Writer) error {
+func (c Delta) Convert(a, b io.Reader, w io.Writer) error {
 	pa, err := profile.Parse(a)
 	if err != nil {
 		return err
@@ -49,8 +49,4 @@ func (c DeltaConfig) Convert(a, b io.Reader, w io.Writer) error {
 		return err
 	}
 	return delta.Write(w)
-}
-
-func Delta(a, b io.Reader, w io.Writer) error {
-	return DeltaConfig{}.Convert(a, b, w)
 }

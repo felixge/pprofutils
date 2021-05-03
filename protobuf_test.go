@@ -10,13 +10,13 @@ import (
 	"github.com/matryer/is"
 )
 
-func TestPPROF2Text(t *testing.T) {
+func TestProtobufConvert(t *testing.T) {
 	is := is.New(t)
 	data, err := os.ReadFile(filepath.Join("test-fixtures", "pprof.samples.cpu.001.pb.gz"))
 	is.NoErr(err)
 
 	out := bytes.Buffer{}
-	is.NoErr(PPROF2Text(bytes.NewReader(data), &out))
+	is.NoErr(Protobuf{}.Convert(bytes.NewReader(data), &out))
 	want := strings.TrimSpace(`
 golang.org/x/sync/errgroup.(*Group).Go.func1;main.run.func2;main.computeSum 19
 golang.org/x/sync/errgroup.(*Group).Go.func1;main.run.func2;main.computeSum;runtime.asyncPreempt 5

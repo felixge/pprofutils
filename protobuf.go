@@ -9,17 +9,17 @@ import (
 	"github.com/google/pprof/profile"
 )
 
-type PPROF2TextConfig struct {
+type Protobuf struct {
 	SampleTypes bool
 }
 
-func (c PPROF2TextConfig) Convert(pprof io.Reader, text io.Writer) error {
+func (p Protobuf) Convert(pprof io.Reader, text io.Writer) error {
 	prof, err := profile.Parse(pprof)
 	if err != nil {
 		return err
 	}
 	w := bufio.NewWriter(text)
-	if c.SampleTypes {
+	if p.SampleTypes {
 		var sampleTypes []string
 		for _, sampleType := range prof.SampleType {
 			sampleTypes = append(sampleTypes, sampleType.Type+"/"+sampleType.Unit)
@@ -38,7 +38,7 @@ func (c PPROF2TextConfig) Convert(pprof io.Reader, text io.Writer) error {
 		var values []string
 		for _, val := range sample.Value {
 			values = append(values, fmt.Sprintf("%d", val))
-			if !c.SampleTypes {
+			if !p.SampleTypes {
 				break
 			}
 		}
@@ -50,8 +50,4 @@ func (c PPROF2TextConfig) Convert(pprof io.Reader, text io.Writer) error {
 		)
 	}
 	return w.Flush()
-}
-
-func PPROF2Text(pprof io.Reader, text io.Writer) error {
-	return PPROF2TextConfig{}.Convert(pprof, text)
 }

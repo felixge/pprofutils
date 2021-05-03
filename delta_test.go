@@ -18,20 +18,20 @@ func TestDelta(t *testing.T) {
 			deltaText bytes.Buffer
 		)
 
-		is.NoErr(Text2PPROF(strings.NewReader(strings.TrimSpace(`
+		is.NoErr(Text{}.Convert(strings.NewReader(strings.TrimSpace(`
 main;foo 5
 main;foo;bar 3
 main;foobar 4
 `)), &profA))
 
-		is.NoErr(Text2PPROF(strings.NewReader(strings.TrimSpace(`
+		is.NoErr(Text{}.Convert(strings.NewReader(strings.TrimSpace(`
 main;foo 8
 main;foo;bar 3
 main;foobar 5
 `)), &profB))
-		is.NoErr(Delta(&profA, &profB, &delta))
+		is.NoErr(Delta{}.Convert(&profA, &profB, &delta))
 
-		is.NoErr(PPROF2Text(&delta, &deltaText))
+		is.NoErr(Protobuf{}.Convert(&delta, &deltaText))
 		is.Equal(deltaText.String(), strings.TrimSpace(`
 main;foo 3
 main;foobar 1
@@ -47,7 +47,7 @@ main;foobar 1
 			deltaText bytes.Buffer
 		)
 
-		is.NoErr(Text2PPROF(strings.NewReader(strings.TrimSpace(`
+		is.NoErr(Text{}.Convert(strings.NewReader(strings.TrimSpace(`
 x/count y/count
 main;foo 5 10
 main;foo;bar 3 6
@@ -55,16 +55,16 @@ main;foo;baz 9 0
 main;foobar 4 8
 `)), &profA))
 
-		is.NoErr(Text2PPROF(strings.NewReader(strings.TrimSpace(`
+		is.NoErr(Text{}.Convert(strings.NewReader(strings.TrimSpace(`
 x/count y/count
 main;foo 8 16
 main;foo;bar 3 6
 main;foo;baz 9 0
 main;foobar 5 10
 `)), &profB))
-		is.NoErr(DeltaConfig{SampleTypes: []SampleType{{Type: "x", Unit: "count"}}}.Convert(&profA, &profB, &delta))
+		is.NoErr(Delta{SampleTypes: []SampleType{{Type: "x", Unit: "count"}}}.Convert(&profA, &profB, &delta))
 
-		is.NoErr(PPROF2TextConfig{SampleTypes: true}.Convert(&delta, &deltaText))
+		is.NoErr(Protobuf{SampleTypes: true}.Convert(&delta, &deltaText))
 		is.Equal(deltaText.String(), strings.TrimSpace(`
 x/count y/count
 main;foo 3 16

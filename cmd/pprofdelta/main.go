@@ -36,7 +36,7 @@ func run() error {
 		return errors.New("2 arguments required")
 	}
 
-	config := pprofutils.DeltaConfig{}
+	config := pprofutils.Delta{}
 	if *typesF != "" {
 		for _, sampleTypeS := range strings.Split(*typesF, " ") {
 			parts := strings.Split(sampleTypeS, "/")

@@ -10,7 +10,10 @@ import (
 	"github.com/google/pprof/profile"
 )
 
-func Text2PPROF(text io.Reader, pprof io.Writer) error {
+// Text converts from folded text to protobuf format.
+type Text struct{}
+
+func (c Text) Convert(text io.Reader, pprof io.Writer) error {
 	var (
 		functionID = uint64(1)
 		locationID = uint64(1)
