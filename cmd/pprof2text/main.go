@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/felixge/pprofutils"
+	"github.com/felixge/pprofutils/internal"
 )
 
 func main() {
@@ -22,7 +23,7 @@ func run() error {
 	)
 	flag.Parse()
 	if *versionF {
-		fmt.Printf("%s\n", pprofutils.Version)
+		fmt.Printf("%s\n", internal.Version)
 		return nil
 	}
 	return pprofutils.Protobuf{SampleTypes: *multiSampleTypes}.Convert(os.Stdin, os.Stdout)

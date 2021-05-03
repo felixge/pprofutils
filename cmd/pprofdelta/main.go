@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/felixge/pprofutils"
+	"github.com/felixge/pprofutils/internal"
 )
 
 func main() {
@@ -29,7 +30,7 @@ func run() error {
 	}
 	flag.Parse()
 	if *versionF {
-		fmt.Printf("%s\n", pprofutils.Version)
+		fmt.Printf("%s\n", internal.Version)
 		return nil
 	} else if flag.NArg() != 2 {
 		flag.Usage()
