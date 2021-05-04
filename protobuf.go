@@ -9,10 +9,15 @@ import (
 	"github.com/google/pprof/profile"
 )
 
+// Protobuf converts from pprof's protobuf to folded text format.
 type Protobuf struct {
+	// SampleTypes causes the text output to begin with a header line listing
+	// the sample types found in the profile. This is a custom extension to the
+	// folded text format.
 	SampleTypes bool
 }
 
+// Convert marshals the given protobuf profile into folded text format.
 func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 	w := bufio.NewWriter(text)
 	if p.SampleTypes {

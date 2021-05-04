@@ -13,6 +13,7 @@ import (
 // Text converts from folded text to protobuf format.
 type Text struct{}
 
+// Convert parses the given text and returns it as protobuf profile.
 func (c Text) Convert(text io.Reader) (*profile.Profile, error) {
 	var (
 		functionID = uint64(1)
