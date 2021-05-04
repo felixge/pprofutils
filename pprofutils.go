@@ -1,6 +1,6 @@
 package pprofutils
 
-type SampleType struct {
+type ValueType struct {
 	Type string
 	Unit string
 }

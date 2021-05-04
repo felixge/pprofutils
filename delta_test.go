@@ -40,10 +40,7 @@ main;foobar 1
 	})
 
 	t.Run("sample types", func(t *testing.T) {
-		var (
-			is        = is.New(t)
-			deltaText bytes.Buffer
-		)
+		var is = is.New(t)
 
 		profA, err := Text{}.Convert(strings.NewReader(strings.TrimSpace(`
 x/count y/count
@@ -63,16 +60,30 @@ main;foobar 5 10
 `)))
 		is.NoErr(err)
 
-		deltaConfig := Delta{SampleTypes: []SampleType{{Type: "x", Unit: "count"}}}
-		delta, err := deltaConfig.Convert(profA, profB)
-		is.NoErr(err)
+		t.Run("happy path", func(t *testing.T) {
+			var (
+				is        = is.New(t)
+				deltaText bytes.Buffer
+			)
 
-		is.NoErr(Protobuf{SampleTypes: true}.Convert(delta, &deltaText))
-		is.Equal(deltaText.String(), strings.TrimSpace(`
+			deltaConfig := Delta{SampleTypes: []ValueType{{Type: "x", Unit: "count"}}}
+			delta, err := deltaConfig.Convert(profA, profB)
+			is.NoErr(err)
+
+			is.NoErr(Protobuf{SampleTypes: true}.Convert(delta, &deltaText))
+			is.Equal(deltaText.String(), strings.TrimSpace(`
 x/count y/count
 main;foo 3 16
 main;foo;bar 0 6
 main;foobar 1 10
 `)+"\n")
+		})
+
+		t.Run("unknown sample type", func(t *testing.T) {
+			var is = is.New(t)
+			deltaConfig := Delta{SampleTypes: []ValueType{{Type: "foo", Unit: "count"}}}
+			_, err := deltaConfig.Convert(profA, profB)
+			is.Equal("One or more sample type(s) was not found in the profile.", err.Error())
+		})
 	})
 }

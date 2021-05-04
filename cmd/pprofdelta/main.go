@@ -45,7 +45,7 @@ func run() error {
 			if len(parts) != 2 {
 				return fmt.Errorf("bad -t option: %q", *typesF)
 			}
-			config.SampleTypes = append(config.SampleTypes, pprofutils.SampleType{
+			config.SampleTypes = append(config.SampleTypes, pprofutils.ValueType{
 				Type: parts[0],
 				Unit: parts[1],
 			})
