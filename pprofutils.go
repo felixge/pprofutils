@@ -1,17 +1,7 @@
 package pprofutils
 
-import (
-	_ "embed"
-	"strings"
-)
-
-var (
-	//go:embed version.txt
-	version string
-	Version string = strings.TrimSpace(version)
-)
-
-type SampleType struct {
+// ValueType describes the type and unit of a value.
+type ValueType struct {
 	Type string
 	Unit string
 }

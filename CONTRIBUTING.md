@@ -12,10 +12,10 @@ go test -v
 go install github.com/felixge/pprofutils/cmd/...
 
 # cut a new release
-vim version.txt
-git add version.txt
-git commit -m "Release $(cat version.txt)"
-git tag $(cat version.txt)
+vim internal/version.txt
+git add internal/version.txt
+git commit -m "Release $(cat internal/version.txt)"
+git tag $(cat internal/version.txt)
 git push
 git push --tags
 ```

@@ -10,7 +10,11 @@ import (
 	"github.com/google/pprof/profile"
 )
 
-func Text2PPROF(text io.Reader, pprof io.Writer) error {
+// Text converts from folded text to protobuf format.
+type Text struct{}
+
+// Convert parses the given text and returns it as protobuf profile.
+func (c Text) Convert(text io.Reader) (*profile.Profile, error) {
 	var (
 		functionID = uint64(1)
 		locationID = uint64(1)
@@ -20,6 +24,9 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 				Type: "samples",
 				Unit: "count",
 			}},
+			// Without his, Delta.Convert() fails in profile.Merge(). Perhaps an
+			// issue that's worth reporting upstream.
+			PeriodType: &profile.ValueType{},
 		}
 	)
 
@@ -28,7 +35,7 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 
 	lines, err := io.ReadAll(text)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	for n, line := range strings.Split(string(lines), "\n") {
 		if strings.TrimSpace(line) == "" {
@@ -42,7 +49,7 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 			for _, sampleType := range strings.Split(line, " ") {
 				parts := strings.Split(sampleType, "/")
 				if len(parts) != 2 {
-					return fmt.Errorf("bad header: %d: %q", n, line)
+					return nil, fmt.Errorf("bad header: %d: %q", n, line)
 				}
 				p.SampleType = append(p.SampleType, &profile.ValueType{
 					Type: parts[0],
@@ -54,7 +61,7 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 
 		parts := strings.Split(line, " ")
 		if len(parts) != len(p.SampleType)+1 {
-			return fmt.Errorf("bad line: %d: %q", n, line)
+			return nil, fmt.Errorf("bad line: %d: %q", n, line)
 		}
 
 		stack := strings.Split(parts[0], ";")
@@ -62,7 +69,7 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 		for _, valS := range parts[1:] {
 			val, err := strconv.ParseInt(valS, 10, 64)
 			if err != nil {
-				return fmt.Errorf("bad line: %d: %q: %w", n, line, err)
+				return nil, fmt.Errorf("bad line: %d: %q: %w", n, line, err)
 			}
 			sample.Value = append(sample.Value, val)
 		}
@@ -89,13 +96,7 @@ func Text2PPROF(text io.Reader, pprof io.Writer) error {
 
 		p.Sample = append(p.Sample, sample)
 	}
-
-	if err := p.CheckValid(); err != nil {
-		return err
-	} else if err := p.Write(pprof); err != nil {
-		return err
-	}
-	return nil
+	return p, p.CheckValid()
 }
 
 // looksLikeHeader returns true if the line looks like this:
