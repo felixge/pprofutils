@@ -9,24 +9,25 @@ import (
 	"github.com/google/pprof/profile"
 )
 
-type PPROF2TextConfig struct {
+// Protobuf converts from pprof's protobuf to folded text format.
+type Protobuf struct {
+	// SampleTypes causes the text output to begin with a header line listing
+	// the sample types found in the profile. This is a custom extension to the
+	// folded text format.
 	SampleTypes bool
 }
 
-func (c PPROF2TextConfig) Convert(pprof io.Reader, text io.Writer) error {
-	prof, err := profile.Parse(pprof)
-	if err != nil {
-		return err
-	}
+// Convert marshals the given protobuf profile into folded text format.
+func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 	w := bufio.NewWriter(text)
-	if c.SampleTypes {
+	if p.SampleTypes {
 		var sampleTypes []string
-		for _, sampleType := range prof.SampleType {
+		for _, sampleType := range protobuf.SampleType {
 			sampleTypes = append(sampleTypes, sampleType.Type+"/"+sampleType.Unit)
 		}
 		w.WriteString(strings.Join(sampleTypes, " ") + "\n")
 	}
-	for _, sample := range prof.Sample {
+	for _, sample := range protobuf.Sample {
 		var frames []string
 		for i := range sample.Location {
 			loc := sample.Location[len(sample.Location)-i-1]
@@ -38,7 +39,7 @@ func (c PPROF2TextConfig) Convert(pprof io.Reader, text io.Writer) error {
 		var values []string
 		for _, val := range sample.Value {
 			values = append(values, fmt.Sprintf("%d", val))
-			if !c.SampleTypes {
+			if !p.SampleTypes {
 				break
 			}
 		}
@@ -50,8 +51,4 @@ func (c PPROF2TextConfig) Convert(pprof io.Reader, text io.Writer) error {
 		)
 	}
 	return w.Flush()
-}
-
-func PPROF2Text(pprof io.Reader, text io.Writer) error {
-	return PPROF2TextConfig{}.Convert(pprof, text)
 }

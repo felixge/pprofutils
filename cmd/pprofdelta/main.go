@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	"github.com/felixge/pprofutils"
+	"github.com/felixge/pprofutils/internal"
+	"github.com/google/pprof/profile"
 )
 
 func main() {
@@ -29,38 +31,36 @@ func run() error {
 	}
 	flag.Parse()
 	if *versionF {
-		fmt.Printf("%s\n", pprofutils.Version)
+		fmt.Printf("%s\n", internal.Version)
 		return nil
 	} else if flag.NArg() != 2 {
 		flag.Usage()
 		return errors.New("2 arguments required")
 	}
 
-	config := pprofutils.DeltaConfig{}
+	config := pprofutils.Delta{}
 	if *typesF != "" {
 		for _, sampleTypeS := range strings.Split(*typesF, " ") {
 			parts := strings.Split(sampleTypeS, "/")
 			if len(parts) != 2 {
 				return fmt.Errorf("bad -t option: %q", *typesF)
 			}
-			config.SampleTypes = append(config.SampleTypes, pprofutils.SampleType{
+			config.SampleTypes = append(config.SampleTypes, pprofutils.ValueType{
 				Type: parts[0],
 				Unit: parts[1],
 			})
 		}
 	}
 
-	profA, err := os.Open(flag.Arg(0))
+	profA, err := loadProfile(flag.Arg(0))
 	if err != nil {
 		return err
 	}
-	defer profA.Close()
 
-	profB, err := os.Open(flag.Arg(1))
+	profB, err := loadProfile(flag.Arg(1))
 	if err != nil {
 		return err
 	}
-	defer profB.Close()
 
 	out, err := os.Create(*outF)
 	if err != nil {
@@ -68,5 +68,18 @@ func run() error {
 	}
 	defer out.Close()
 
-	return config.Convert(profA, profB, out)
+	delta, err := config.Convert(profA, profB)
+	if err != nil {
+		return err
+	}
+	return delta.Write(out)
+}
+
+func loadProfile(path string) (*profile.Profile, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+	return profile.Parse(file)
 }

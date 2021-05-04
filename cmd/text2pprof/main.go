@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/felixge/pprofutils"
+	"github.com/felixge/pprofutils/internal"
 )
 
 func main() {
@@ -19,8 +20,12 @@ func run() error {
 	versionF := flag.Bool("version", false, "Print version and exit.")
 	flag.Parse()
 	if *versionF {
-		fmt.Printf("%s\n", pprofutils.Version)
+		fmt.Printf("%s\n", internal.Version)
 		return nil
 	}
-	return pprofutils.Text2PPROF(os.Stdin, os.Stdout)
+	outProf, err := pprofutils.Text{}.Convert(os.Stdin)
+	if err != nil {
+		return err
+	}
+	return outProf.Write(os.Stderr)
 }
