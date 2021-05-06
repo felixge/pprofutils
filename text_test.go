@@ -23,7 +23,22 @@ main;foobar 4
 		is.Equal(textIn+"\n", textOut.String())
 	})
 
-	t.Run("multiple sample types", func(t *testing.T) {
+	t.Run("header with one sample type", func(t *testing.T) {
+		is := is.New(t)
+		textIn := strings.TrimSpace(`
+samples/count
+main;foo 5
+main;foo;bar 3
+main;foobar 4
+	`)
+		proto, err := Text{}.Convert(strings.NewReader(textIn))
+		is.NoErr(err)
+		textOut := bytes.Buffer{}
+		is.NoErr(Protobuf{SampleTypes: true}.Convert(proto, &textOut))
+		is.Equal(textIn+"\n", textOut.String())
+	})
+
+	t.Run("header with multiple sample types", func(t *testing.T) {
 		is := is.New(t)
 		textIn := strings.TrimSpace(`
 samples/count duration/nanoseconds
