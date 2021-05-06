@@ -2,7 +2,7 @@ package pprofutils
 
 import (
 	"bytes"
-	"os"
+	"io/ioutil"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -13,7 +13,7 @@ import (
 
 func TestProtobufConvert(t *testing.T) {
 	is := is.New(t)
-	data, err := os.ReadFile(filepath.Join("test-fixtures", "pprof.samples.cpu.001.pb.gz"))
+	data, err := ioutil.ReadFile(filepath.Join("test-fixtures", "pprof.samples.cpu.001.pb.gz"))
 	is.NoErr(err)
 
 	proto, err := profile.Parse(bytes.NewReader(data))

@@ -3,6 +3,7 @@ package pprofutils
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"strconv"
 	"strings"
 	"time"
@@ -33,7 +34,7 @@ func (c Text) Convert(text io.Reader) (*profile.Profile, error) {
 	m := &profile.Mapping{ID: 1, HasFunctions: true}
 	p.Mapping = []*profile.Mapping{m}
 
-	lines, err := io.ReadAll(text)
+	lines, err := ioutil.ReadAll(text)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +70,7 @@ func (c Text) Convert(text io.Reader) (*profile.Profile, error) {
 		for _, valS := range parts[1:] {
 			val, err := strconv.ParseInt(valS, 10, 64)
 			if err != nil {
-				return nil, fmt.Errorf("bad line: %d: %q: %w", n, line, err)
+				return nil, fmt.Errorf("bad line: %d: %q: %s", n, line, err)
 			}
 			sample.Value = append(sample.Value, val)
 		}
