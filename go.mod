@@ -1,6 +1,6 @@
 module github.com/felixge/pprofutils
 
-go 1.12
+go 1.16
 
 require (
 	github.com/google/pprof v0.0.0-20210423192551-a2663126120b
