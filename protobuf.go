@@ -27,6 +27,9 @@ func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 		}
 		w.WriteString(strings.Join(sampleTypes, " ") + "\n")
 	}
+	if err := protobuf.Aggregate(true, true, false, false, false); err != nil {
+		return err
+	}
 	for _, sample := range protobuf.Sample {
 		var frames []string
 		for i := range sample.Location {
