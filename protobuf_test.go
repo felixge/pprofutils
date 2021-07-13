@@ -47,10 +47,9 @@ runtime.mstart;runtime.mstart1;runtime.sysmon;runtime.usleep 3
 		want := strings.TrimSpace(`
 main.run.func1;main.threadKind.Run;main.goGo1;main.goHog 85
 main.run.func1;main.threadKind.Run;main.goGo2;main.goHog 78
-main.run.func1;main.threadKind.Run;main.goGo3;main.goHog 71
+main.run.func1;main.threadKind.Run;main.goGo3;main.goHog 72
 main.run.func1;main.threadKind.Run;main.goGo0;main.goHog 72
 main.run.func1;main.threadKind.Run;main.goGo0;main.goHog;runtime.asyncPreempt 1
-main.run.func1;main.threadKind.Run;main.goGo3;main.goHog 1
 `) + "\n"
 		is.Equal(out.String(), want)
 	})

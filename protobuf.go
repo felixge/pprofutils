@@ -30,6 +30,7 @@ func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 	if err := protobuf.Aggregate(true, true, false, false, false); err != nil {
 		return err
 	}
+	protobuf = protobuf.Compact()
 	for _, sample := range protobuf.Sample {
 		var frames []string
 		for i := range sample.Location {
