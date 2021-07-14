@@ -13,8 +13,8 @@ func TestTextConvert(t *testing.T) {
 		is := is.New(t)
 		textIn := strings.TrimSpace(`
 main;foo 5
-main;foo;bar 3
 main;foobar 4
+main;foo;bar 3
 `)
 		proto, err := Text{}.Convert(strings.NewReader(textIn))
 		is.NoErr(err)
@@ -28,8 +28,8 @@ main;foobar 4
 		textIn := strings.TrimSpace(`
 samples/count
 main;foo 5
-main;foo;bar 3
 main;foobar 4
+main;foo;bar 3
 	`)
 		proto, err := Text{}.Convert(strings.NewReader(textIn))
 		is.NoErr(err)
@@ -43,8 +43,8 @@ main;foobar 4
 		textIn := strings.TrimSpace(`
 samples/count duration/nanoseconds
 main;foo 5 50000000
-main;foo;bar 3 30000000
 main;foobar 4 40000000
+main;foo;bar 3 30000000
 	`)
 		proto, err := Text{}.Convert(strings.NewReader(textIn))
 		is.NoErr(err)

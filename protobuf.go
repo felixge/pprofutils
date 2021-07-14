@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"sort"
 	"strings"
 
 	"github.com/google/pprof/profile"
@@ -31,6 +32,9 @@ func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 		return err
 	}
 	protobuf = protobuf.Compact()
+	sort.Slice(protobuf.Sample, func(i, j int) bool {
+		return protobuf.Sample[i].Value[0] > protobuf.Sample[j].Value[0]
+	})
 	for _, sample := range protobuf.Sample {
 		var frames []string
 		for i := range sample.Location {

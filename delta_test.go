@@ -74,8 +74,8 @@ main;foobar 5 10
 			is.Equal(deltaText.String(), strings.TrimSpace(`
 x/count y/count
 main;foo 3 16
-main;foo;bar 0 6
 main;foobar 1 10
+main;foo;bar 0 6
 `)+"\n")
 		})
 
