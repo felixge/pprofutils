@@ -3,7 +3,7 @@
 
 # pprofutils
 
-pprofutils provides command line utilities for converting [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md) to Brendan Gregg's [folded text](https://github.com/brendangregg/FlameGraph#2-fold-stacks) format and vice versa.
+pprofutils provides command line utilities for converting [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md) to Brendan Gregg's [folded text](https://github.com/brendangregg/FlameGraph#2-fold-stacks) format (output by his `stackcollapse` scripts) and vice versa.
 
 ## Install
 
@@ -15,23 +15,29 @@ go install github.com/felixge/pprofutils/cmd/...@latest
 
 ## Usage
 
-Convert a pprof file to text:
+Convert a pprof file to folded stack text:
 
-```
+```bash
 pprof2text < ./test-fixtures/pprof.samples.cpu.001.pb.gz > example.txt
 ```
 
-Convert a text file to pprof:
+Convert a folded stack text file to pprof:
 
-```
+```bash
 text2pprof < example.txt > example.pprof
 ```
 
 Warning: Converting from pprof to text is lossy. Only the first sample type will be converted, file names, lines, labels, and more will be dropped. Patches to make things less lossy would be welcome, but please open an issue first to discuss.
 
+Convert a Linux `perf.data` profile to `pprof`, via Brendan Gregg's [`stackcollapse-perf.pl`](https://github.com/brendangregg/FlameGraph/blob/master/stackcollapse-perf.pl) script:
+
+```bash
+perf script | stackcollapse-perf.pl | text2pprof > perf.pprof
+```
+
 Create a delta profile that contains the difference `heap-b.pprof - heap-a.pprof`:
 
-```
+```bash
 pprofdelta -o delta.pprof heap-a.pprof heap-b.pprof
 ```
 
@@ -49,13 +55,13 @@ main;foobar 4
 
 Then convert it to a pprof profile:
 
-```
+```bash
 text2pprof < profile.txt > profile.pprof
 ```
 
 And finally view it using pprof:
 
-```
+```bash
 go tool pprof -http=:6060 profile.pprof
 ```
 
