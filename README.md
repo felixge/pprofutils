@@ -32,7 +32,7 @@ Warning: Converting from pprof to text is lossy. Only the first sample type will
 Convert a Linux `perf.data` profile to `pprof`, via Brendan Gregg's [`stackcollapse-perf.pl`](https://github.com/brendangregg/FlameGraph/blob/master/stackcollapse-perf.pl) script:
 
 ```bash
-stackcollapse-perf.pl < perf.data | text2pprof > perf.pprof
+perf script | stackcollapse-perf.pl | text2pprof > perf.pprof
 ```
 
 Create a delta profile that contains the difference `heap-b.pprof - heap-a.pprof`:
