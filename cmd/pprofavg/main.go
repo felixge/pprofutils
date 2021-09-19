@@ -1,0 +1,65 @@
+package main
+
+import (
+	"errors"
+	"flag"
+	"fmt"
+	"os"
+
+	"github.com/felixge/pprofutils/internal"
+	"github.com/google/pprof/profile"
+)
+
+func main() {
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
+	var (
+		versionF = flag.Bool("version", false, "Print version and exit.")
+	)
+	flag.Parse()
+	if *versionF {
+		fmt.Printf("%s\n", internal.Version)
+		return nil
+	}
+	inProf, err := profile.Parse(os.Stdin)
+	if err != nil {
+		return err
+	}
+
+	var (
+		countIDX = -1
+		delayIDX = -1
+	)
+	for i, st := range inProf.SampleType {
+		if st.Type == "contentions" && st.Unit == "count" {
+			countIDX = i
+		}
+		if st.Type == "delay" && st.Unit == "nanoseconds" {
+			delayIDX = i
+		}
+	}
+	if countIDX == -1 {
+		return errors.New("profile lacks a contentions/count sample type")
+	}
+	if delayIDX == -1 {
+		return errors.New("profile lacks a delay/nanoseconds sample type")
+	}
+
+	for i, s := range inProf.Sample {
+		if countIDX >= len(s.Value) {
+			return fmt.Errorf("sample %d has no contentions/count value", i)
+		}
+		if delayIDX >= len(s.Value) {
+			return fmt.Errorf("sample %d has no delay/nanoseconds value", i)
+		}
+		count, delay := s.Value[countIDX], s.Value[delayIDX]
+		s.Value[delayIDX] = delay / count
+	}
+
+	return inProf.Write(os.Stdout)
+}
