@@ -29,39 +29,8 @@ func run() error {
 		serveAddr    = serveFlagSet.String("addr", "localhost:8080", "HTTP listen addr.")
 	)
 
-	for _, cmd := range commands {
-		cmd := cmd
-		fs := flag.NewFlagSet("pprofutils "+cmd.Name, flag.ExitOnError)
-		boolFlags := map[string]*bool{}
-		for name, bf := range cmd.BoolFlags {
-			val := bf.Default
-			fs.BoolVar(&val, name, bf.Default, bf.Usage)
-			boolFlags[name] = &val
-		}
-
-		ffCmd := &ffcli.Command{
-			Name:    cmd.Name,
-			FlagSet: fs,
-			Exec: func(ctx context.Context, args []string) error {
-				in, out, err := openInputOutput(args)
-				if err != nil {
-					return err
-				}
-				defer in.Close()
-				defer out.Close()
-
-				a := &Args{}
-				a.Inputs = append(a.Inputs, in)
-				a.Output = out
-				a.BoolFlags = make(map[string]bool)
-				for k, v := range boolFlags {
-					a.BoolFlags[k] = *v
-				}
-
-				return cmd.Execute(ctx, a)
-			},
-		}
-		ffCommands = append(ffCommands, ffCmd)
+	for _, util := range utilCommands {
+		ffCommands = append(ffCommands, ffCommand(util))
 	}
 
 	ffCommands = append(ffCommands, &ffcli.Command{
@@ -100,6 +69,48 @@ func run() error {
 		log.Fatal(err)
 	}
 	return nil
+}
+
+func ffCommand(cmd UtilCommand) *ffcli.Command {
+	fs := flag.NewFlagSet("pprofutils "+cmd.Name, flag.ExitOnError)
+	flags := map[string]interface{}{}
+	for name, bf := range cmd.Flags {
+		val := bf.Default
+		switch vt := val.(type) {
+		case bool:
+			fs.BoolVar(&vt, name, vt, bf.Usage)
+			flags[name] = &vt
+		}
+	}
+
+	return &ffcli.Command{
+		Name:       cmd.Name,
+		ShortUsage: fmt.Sprintf("pprofutils %s %s", cmd.Name, cmd.ShortUsage),
+		ShortHelp:  cmd.ShortHelp,
+		LongHelp:   cmd.LongHelp,
+		FlagSet:    fs,
+		Exec: func(ctx context.Context, args []string) error {
+			in, out, err := openInputOutput(args)
+			if err != nil {
+				return err
+			}
+			defer in.Close()
+			defer out.Close()
+
+			a := &UtilArgs{}
+			a.Inputs = append(a.Inputs, in)
+			a.Output = out
+			a.Flags = make(map[string]interface{})
+			for k, v := range flags {
+				switch vt := v.(type) {
+				case *bool:
+					a.Flags[k] = *vt
+				}
+			}
+
+			return cmd.Execute(ctx, a)
+		},
+	}
 }
 
 func run2() error {

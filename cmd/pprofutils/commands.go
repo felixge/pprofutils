@@ -7,37 +7,43 @@ import (
 	"github.com/felixge/pprofutils/utils"
 )
 
-var commands = []Command{
+var utilCommands = []UtilCommand{
 	{
-		Name:   "json",
-		Inputs: 1,
-		BoolFlags: map[string]BoolFlag{
+		Name:       "json",
+		ShortUsage: "[-simple] <input file> <output file>",
+		ShortHelp:  "Converts from pprof to json and vice versa.",
+		LongHelp: `The input and output file default to "-" which means stdin or stdout. If the` + "\n" +
+			`input is pprof the output is json and for json inputs the output is pprof. This` + "\n" +
+			`is automatically detected.`,
+		Flags: map[string]UtilFlag{
 			"simple": {false, "Use simplified JSON format."},
 		},
-		Execute: func(ctx context.Context, a *Args) error {
+		Execute: func(ctx context.Context, a *UtilArgs) error {
 			return (&utils.JSON{
 				Input:  a.Inputs[0],
 				Output: a.Output,
-				Simple: a.BoolFlags["simple"],
+				Simple: a.Flags["simple"].(bool),
 			}).Execute(ctx)
 		},
 	},
 }
 
-type Command struct {
-	Name      string
-	Inputs    int
-	BoolFlags map[string]BoolFlag
-	Execute   func(context.Context, *Args) error
+type UtilCommand struct {
+	Name       string
+	ShortUsage string
+	ShortHelp  string
+	LongHelp   string
+	Flags      map[string]UtilFlag
+	Execute    func(context.Context, *UtilArgs) error
 }
 
-type Args struct {
-	Inputs    []io.Reader
-	Output    io.Writer
-	BoolFlags map[string]bool
+type UtilArgs struct {
+	Inputs []io.Reader
+	Output io.Writer
+	Flags  map[string]interface{}
 }
 
-type BoolFlag struct {
-	Default bool
+type UtilFlag struct {
+	Default interface{}
 	Usage   string
 }
