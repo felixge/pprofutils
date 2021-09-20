@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -28,7 +30,8 @@ func newHTTPServer() http.Handler {
 
 func utilHandler(cmd UtilCommand) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		a := &UtilArgs{Output: w}
+		out := &bytes.Buffer{}
+		a := &UtilArgs{Output: out}
 		contentType := r.Header.Get("Content-Type")
 		if strings.HasPrefix(contentType, "multipart/form-data") {
 			if err := r.ParseMultipartForm(maxFileSize); err != nil {
@@ -80,6 +83,8 @@ func utilHandler(cmd UtilCommand) http.Handler {
 
 		if err := cmd.Execute(r.Context(), a); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
+		_, _ = io.Copy(w, out)
 	})
 }

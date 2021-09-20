@@ -10,7 +10,6 @@ import (
 	"os"
 	"sort"
 
-	"github.com/felixge/pprofutils/utils"
 	"github.com/peterbourgon/ff/v3/ffcli"
 )
 
@@ -70,10 +69,7 @@ func run() error {
 		},
 	}
 
-	if err := rootCmd.ParseAndRun(context.Background(), os.Args[1:]); err != nil {
-		log.Fatal(err)
-	}
-	return nil
+	return rootCmd.ParseAndRun(context.Background(), os.Args[1:])
 }
 
 func ffCommand(cmd UtilCommand) *ffcli.Command {
@@ -116,81 +112,6 @@ func ffCommand(cmd UtilCommand) *ffcli.Command {
 			return cmd.Execute(ctx, a)
 		},
 	}
-}
-
-func run2() error {
-	var (
-		rootFlagSet  = flag.NewFlagSet("pprofutils", flag.ExitOnError)
-		jsonFlagSet  = flag.NewFlagSet("pprofutils json", flag.ExitOnError)
-		jsonSimple   = jsonFlagSet.Bool("simple", false, "Use simplified JSON format.")
-		serveFlagSet = flag.NewFlagSet("pprofutils serve", flag.ExitOnError)
-		serveAddr    = jsonFlagSet.String("addr", "localhost:8080", "HTTP listen addr.")
-	)
-
-	jsonCmd := &ffcli.Command{
-		Name:       "json",
-		FlagSet:    jsonFlagSet,
-		ShortUsage: "pprofutils json [-simple] <input file> <output file>",
-		ShortHelp:  "Converts from pprof to json and vice versa.",
-		LongHelp: `The input and output file default to "-" which means stdin or stdout. If the` + "\n" +
-			`input is pprof the output is json and for json inputs the output is pprof. This` + "\n" +
-			`is automatically detected.` + "\n",
-		Exec: func(ctx context.Context, args []string) error {
-			in, out, err := openInputOutput(args)
-			if err != nil {
-				return err
-			}
-			defer in.Close()
-			defer out.Close()
-
-			return (&utils.JSON{
-				Input:  in,
-				Output: out,
-				Simple: *jsonSimple,
-			}).Execute(ctx)
-		},
-	}
-
-	// TODO custom Command{} struct that can generate both http handlers
-	// as well as cli
-
-	serveCmd := &ffcli.Command{
-		Name:       "serve",
-		FlagSet:    serveFlagSet,
-		ShortUsage: "pprofutils serve [-addr addr]",
-		ShortHelp:  "Serves pprofutils as a HTTP REST API.",
-		Exec: func(_ context.Context, _ []string) error {
-			log.Printf("Serving pprofutils %s via http at %s", version, *serveAddr)
-			return http.ListenAndServe(*serveAddr, newHTTPServer())
-		},
-	}
-
-	versionCmd := &ffcli.Command{
-		Name:       "version",
-		FlagSet:    serveFlagSet,
-		ShortUsage: "pprofutils version",
-		ShortHelp:  "Print version and exit.",
-		Exec: func(_ context.Context, _ []string) error {
-			os.Stdout.WriteString(version + "\n")
-			return nil
-		},
-	}
-
-	var rootCmd *ffcli.Command
-	rootCmd = &ffcli.Command{
-		ShortUsage:  "pprofutils <subcommand>",
-		FlagSet:     rootFlagSet,
-		Subcommands: []*ffcli.Command{jsonCmd, serveCmd, versionCmd},
-		Exec: func(_ context.Context, _ []string) error {
-			os.Stdout.WriteString(rootCmd.UsageFunc(rootCmd))
-			return nil
-		},
-	}
-
-	if err := rootCmd.ParseAndRun(context.Background(), os.Args[1:]); err != nil {
-		log.Fatal(err)
-	}
-	return nil
 }
 
 func openInputOutput(args []string) (io.ReadCloser, io.WriteCloser, error) {
