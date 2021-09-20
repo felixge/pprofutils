@@ -23,11 +23,16 @@ func main() {
 	}
 }
 func run() error {
+	var addr = "localhost:8080"
+	if port := os.Getenv("PORT"); port != "" {
+		addr = ":" + port
+	}
+
 	var (
 		rootFlagSet  = flag.NewFlagSet("pprofutils", flag.ExitOnError)
 		ffCommands   []*ffcli.Command
 		serveFlagSet = flag.NewFlagSet("pprofutils serve", flag.ExitOnError)
-		serveAddr    = serveFlagSet.String("addr", "localhost:8080", "HTTP listen addr.")
+		serveAddr    = serveFlagSet.String("addr", addr, "HTTP listen addr.")
 	)
 
 	for _, util := range utilCommands {
