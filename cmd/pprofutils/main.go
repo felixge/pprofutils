@@ -82,6 +82,9 @@ func ffCommand(cmd UtilCommand) *ffcli.Command {
 		case bool:
 			fs.BoolVar(&vt, name, vt, bf.Usage)
 			flags[name] = &vt
+		case string:
+			fs.StringVar(&vt, name, vt, bf.Usage)
+			flags[name] = &vt
 		}
 	}
 
@@ -110,6 +113,8 @@ func ffCommand(cmd UtilCommand) *ffcli.Command {
 			for k, v := range flags {
 				switch vt := v.(type) {
 				case *bool:
+					a.Flags[k] = *vt
+				case *string:
 					a.Flags[k] = *vt
 				}
 			}
