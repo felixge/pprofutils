@@ -8,12 +8,12 @@ import (
 )
 
 type Raw struct {
-	Input  io.Reader
+	Input  []byte
 	Output io.Writer
 }
 
 func (r *Raw) Execute(ctx context.Context) error {
-	prof, err := profile.Parse(r.Input)
+	prof, err := profile.ParseData(r.Input)
 	if err != nil {
 		return err
 	}

@@ -50,7 +50,7 @@ type UtilCommand struct {
 }
 
 type UtilArgs struct {
-	Inputs []io.Reader
+	Inputs [][]byte
 	Output io.Writer
 	Flags  map[string]interface{}
 }

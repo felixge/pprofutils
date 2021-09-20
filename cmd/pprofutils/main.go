@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -99,7 +100,11 @@ func ffCommand(cmd UtilCommand) *ffcli.Command {
 			defer out.Close()
 
 			a := &UtilArgs{}
-			a.Inputs = append(a.Inputs, in)
+			inBuf, err := ioutil.ReadAll(in)
+			if err != nil {
+				return err
+			}
+			a.Inputs = append(a.Inputs, inBuf)
 			a.Output = out
 			a.Flags = make(map[string]interface{})
 			for k, v := range flags {

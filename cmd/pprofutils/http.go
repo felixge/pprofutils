@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"net/http"
@@ -14,7 +15,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-const maxFileSize = 128 * 1024 * 1024
+const maxPostSize = 128 * 1024 * 1024
 
 func newHTTPServer() http.Handler {
 	router := httprouter.New()
@@ -30,11 +31,12 @@ func newHTTPServer() http.Handler {
 
 func utilHandler(cmd UtilCommand) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var in io.Reader
 		out := &bytes.Buffer{}
 		a := &UtilArgs{Output: out}
 		contentType := r.Header.Get("Content-Type")
 		if strings.HasPrefix(contentType, "multipart/form-data") {
-			if err := r.ParseMultipartForm(maxFileSize); err != nil {
+			if err := r.ParseMultipartForm(maxPostSize); err != nil {
 				http.Error(w, "upload too big: "+err.Error(), http.StatusBadRequest)
 				return
 			}
@@ -57,10 +59,17 @@ func utilHandler(cmd UtilCommand) http.Handler {
 			}
 			defer file.Close()
 
-			a.Inputs = append(a.Inputs, file)
+			in = file
 		} else {
-			a.Inputs = append(a.Inputs, r.Body)
+			in = io.LimitReader(r.Body, maxPostSize)
 		}
+
+		inBuf, err := ioutil.ReadAll(in)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("upload error: %s\n", err), http.StatusBadRequest)
+			return
+		}
+		a.Inputs = append(a.Inputs, inBuf)
 
 		a.Flags = make(map[string]interface{})
 		for name, flag := range cmd.Flags {
