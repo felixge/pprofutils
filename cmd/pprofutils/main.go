@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 
 	"github.com/felixge/pprofutils/utils"
 	"github.com/peterbourgon/ff/v3/ffcli"
@@ -34,24 +35,28 @@ func run() error {
 	}
 
 	ffCommands = append(ffCommands, &ffcli.Command{
+		Name:       "serve",
+		FlagSet:    serveFlagSet,
+		ShortUsage: "pprofutils serve [-addr addr]",
+		ShortHelp:  "Serves pprofutils as a HTTP REST API",
+		Exec: func(_ context.Context, _ []string) error {
+			log.Printf("Serving pprofutils %s via http at %s", version, *serveAddr)
+			return http.ListenAndServe(*serveAddr, newHTTPServer())
+		},
+	})
+
+	ffCommands = append(ffCommands, &ffcli.Command{
 		Name:       "version",
 		ShortUsage: "pprofutils version",
-		ShortHelp:  "Print version and exit.",
+		ShortHelp:  "Print version and exit",
 		Exec: func(_ context.Context, _ []string) error {
 			os.Stdout.WriteString(version + "\n")
 			return nil
 		},
 	})
 
-	ffCommands = append(ffCommands, &ffcli.Command{
-		Name:       "serve",
-		FlagSet:    serveFlagSet,
-		ShortUsage: "pprofutils serve [-addr addr]",
-		ShortHelp:  "Serves pprofutils as a HTTP REST API.",
-		Exec: func(_ context.Context, _ []string) error {
-			log.Printf("Serving pprofutils %s via http at %s", version, *serveAddr)
-			return http.ListenAndServe(*serveAddr, newHTTPServer())
-		},
+	sort.Slice(ffCommands, func(i, j int) bool {
+		return ffCommands[i].Name < ffCommands[j].Name
 	})
 
 	var rootCmd *ffcli.Command

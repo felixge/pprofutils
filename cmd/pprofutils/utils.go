@@ -11,7 +11,7 @@ var utilCommands = []UtilCommand{
 	{
 		Name:       "json",
 		ShortUsage: "[-simple] <input file> <output file>",
-		ShortHelp:  "Converts from pprof to json and vice versa.",
+		ShortHelp:  "Converts from pprof to json and vice versa",
 		LongHelp: `The input and output file default to "-" which means stdin or stdout. If the` + "\n" +
 			`input is pprof the output is json and for json inputs the output is pprof. This` + "\n" +
 			`is automatically detected.`,
@@ -23,6 +23,18 @@ var utilCommands = []UtilCommand{
 				Input:  a.Inputs[0],
 				Output: a.Output,
 				Simple: a.Flags["simple"].(bool),
+			}).Execute(ctx)
+		},
+	},
+	{
+		Name:       "raw",
+		ShortUsage: "<input file> <output file>",
+		ShortHelp:  "Converts pprof to the same text format as go tool pprof -raw",
+		LongHelp:   `The input and output file default to "-" which means stdin or stdout`,
+		Execute: func(ctx context.Context, a *UtilArgs) error {
+			return (&utils.Raw{
+				Input:  a.Inputs[0],
+				Output: a.Output,
 			}).Execute(ctx)
 		},
 	},
