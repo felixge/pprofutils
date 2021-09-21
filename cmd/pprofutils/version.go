@@ -2,4 +2,4 @@
 
 package main
 
-var version = "v1.0.3-20-g5617b50"
+var version = "v1.0.3-22-g25776cd"
