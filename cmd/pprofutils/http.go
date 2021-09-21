@@ -12,13 +12,13 @@ import (
 	"strings"
 
 	"github.com/felixge/httpsnoop"
-	"github.com/julienschmidt/httprouter"
+	httptrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/julienschmidt/httprouter"
 )
 
 const maxPostSize = 128 * 1024 * 1024
 
 func newHTTPServer() http.Handler {
-	router := httprouter.New()
+	router := httptrace.New()
 	for _, cmd := range utilCommands {
 		router.Handler("POST", "/"+cmd.Name, utilHandler(cmd))
 	}

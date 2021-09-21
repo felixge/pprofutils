@@ -10,8 +10,11 @@ import (
 	"net/http"
 	"os"
 	"sort"
+	"time"
 
 	"github.com/peterbourgon/ff/v3/ffcli"
+	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
+	"gopkg.in/DataDog/dd-trace-go.v1/profiler"
 )
 
 var version = "vN/A"
@@ -33,6 +36,8 @@ func run() error {
 		ffCommands   []*ffcli.Command
 		serveFlagSet = flag.NewFlagSet("pprofutils serve", flag.ExitOnError)
 		serveAddr    = serveFlagSet.String("addr", addr, "HTTP listen addr.")
+		profiling    = serveFlagSet.Bool("profiling", false, "Enable profiling.")
+		tracing      = serveFlagSet.Bool("tracing", false, "Enable tracing.")
 	)
 
 	for _, util := range utilCommands {
@@ -45,6 +50,27 @@ func run() error {
 		ShortUsage: "pprofutils serve [-addr addr]",
 		ShortHelp:  "Serves pprofutils as a HTTP REST API",
 		Exec: func(_ context.Context, _ []string) error {
+			if *profiling {
+				log.Printf("Starting datadog profiler")
+				profilerOptions := []profiler.Option{
+					profiler.WithVersion(version),
+					profiler.CPUDuration(60 * time.Second),
+					profiler.WithPeriod(60 * time.Second),
+				}
+				if err := profiler.Start(profilerOptions...); err != nil {
+					return err
+				}
+				defer profiler.Stop()
+			}
+
+			if *tracing {
+				log.Printf("Starting datadog tracer")
+				tracer.Start(
+					tracer.WithServiceVersion(version),
+				)
+				defer tracer.Stop()
+			}
+
 			log.Printf("Serving pprofutils %s via http at %s", version, *serveAddr)
 			return http.ListenAndServe(*serveAddr, newHTTPServer())
 		},
