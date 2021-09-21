@@ -13,6 +13,7 @@ import (
 
 	"github.com/felixge/httpsnoop"
 	httptrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/julienschmidt/httprouter"
+	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )
 
 const maxPostSize = 128 * 1024 * 1024
@@ -24,6 +25,9 @@ func newHTTPServer() http.Handler {
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		span, _ := tracer.SpanFromContext(r.Context())
+		span.SetTag("http.full_url", r.URL.String())
+
 		m := httpsnoop.CaptureMetrics(router, w, r)
 		log.Printf("%d %s %s %s", m.Code, r.Method, r.URL, m.Duration)
 	})
