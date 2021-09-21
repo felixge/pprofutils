@@ -45,6 +45,20 @@ Converts pprof to the same text format as go tool pprof -raw
 		},
 	},
 	{
+		Name:       "folded",
+		ShortUsage: "<input file> <output file>",
+		ShortHelp:  "Converts pprof to Brendan Gregg's folded text format",
+		LongHelp: strings.TrimSpace(`
+Converts pprof to Brendan Gregg's folded text format.
+`) + commonSuffix,
+		Execute: func(ctx context.Context, a *UtilArgs) error {
+			return (&utils.Folded{
+				Input:  a.Inputs[0],
+				Output: a.Output,
+			}).Execute(ctx)
+		},
+	},
+	{
 		Name: "labelframes",
 		Flags: map[string]UtilFlag{
 			"label": {"", "The label key to turn into virtual frames."},

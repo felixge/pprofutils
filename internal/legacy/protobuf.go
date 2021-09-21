@@ -1,4 +1,4 @@
-package pprofutils
+package legacy
 
 import (
 	"bufio"
