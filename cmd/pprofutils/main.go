@@ -17,7 +17,7 @@ import (
 	"gopkg.in/DataDog/dd-trace-go.v1/profiler"
 )
 
-var version = "vN/A"
+//go:generate bash -c "../../scripts/generate_version.bash > version.go"
 
 func main() {
 	if err := run(); err != nil {
