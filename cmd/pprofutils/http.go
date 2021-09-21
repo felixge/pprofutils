@@ -25,9 +25,6 @@ func newHTTPServer() http.Handler {
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		span, _ := tracer.SpanFromContext(r.Context())
-		span.SetTag("http.full_url", r.URL.String())
-
 		m := httpsnoop.CaptureMetrics(router, w, r)
 		log.Printf("%d %s %s %s", m.Code, r.Method, r.URL, m.Duration)
 	})
@@ -35,6 +32,9 @@ func newHTTPServer() http.Handler {
 
 func utilHandler(cmd UtilCommand) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		span, _ := tracer.SpanFromContext(r.Context())
+		span.SetTag("http.full_url", r.URL.String())
+
 		var in io.Reader
 		out := &bytes.Buffer{}
 		a := &UtilArgs{Output: out}
