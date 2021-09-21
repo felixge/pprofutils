@@ -34,6 +34,9 @@ func utilHandler(cmd UtilCommand) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		span, _ := tracer.SpanFromContext(r.Context())
 		span.SetTag("http.full_url", r.URL.String())
+		span.SetTag("http.content_length", r.Header.Get("Content-Length"))
+		span.SetTag("user.ip", r.Header.Get("Fly-Client-IP"))
+		span.SetTag("user.agent", r.Header.Get("User-Agent"))
 
 		var in io.Reader
 		out := &bytes.Buffer{}
