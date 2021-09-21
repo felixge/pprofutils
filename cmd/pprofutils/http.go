@@ -30,6 +30,7 @@ func newHTTPServer() http.Handler {
 	})
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Service-Version", version)
 		m := httpsnoop.CaptureMetrics(router, w, r)
 		log.Printf("%d %s %s %s", m.Code, r.Method, r.URL, m.Duration)
 	})
