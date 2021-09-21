@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -31,29 +32,21 @@ func newHTTPServer() http.Handler {
 }
 
 func utilHandler(cmd UtilCommand) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		span, _ := tracer.SpanFromContext(r.Context())
-		span.SetTag("http.full_url", r.URL.String())
-		span.SetTag("http.content_length", r.Header.Get("Content-Length"))
-		span.SetTag("user.ip", r.Header.Get("Fly-Client-IP"))
-		span.SetTag("user.agent", r.Header.Get("User-Agent"))
-
+	handler := func(w http.ResponseWriter, r *http.Request) error {
 		var in io.Reader
 		out := &bytes.Buffer{}
 		a := &UtilArgs{Output: out}
 		contentType := r.Header.Get("Content-Type")
 		if strings.HasPrefix(contentType, "multipart/form-data") {
 			if err := r.ParseMultipartForm(maxPostSize); err != nil {
-				http.Error(w, "upload too big: "+err.Error(), http.StatusBadRequest)
-				return
+				return fmt.Errorf("upload too big: %w", err)
 			}
 
 			var first *multipart.FileHeader
 			for _, files := range r.MultipartForm.File {
 				for _, file := range files {
 					if first != nil {
-						http.Error(w, "only one file is expected to be uploaded\n", http.StatusBadRequest)
-						return
+						return errors.New("only one file is expected to be uploaded")
 					}
 					first = file
 				}
@@ -61,8 +54,7 @@ func utilHandler(cmd UtilCommand) http.Handler {
 
 			file, err := first.Open()
 			if err != nil {
-				http.Error(w, fmt.Sprintf("failed to open file: %s\n", err), http.StatusBadRequest)
-				return
+				return fmt.Errorf("failed to open file: %w", err)
 			}
 			defer file.Close()
 
@@ -73,8 +65,7 @@ func utilHandler(cmd UtilCommand) http.Handler {
 
 		inBuf, err := ioutil.ReadAll(in)
 		if err != nil {
-			http.Error(w, fmt.Sprintf("upload error: %s\n", err), http.StatusBadRequest)
-			return
+			return fmt.Errorf("upload error: %w", err)
 		}
 		a.Inputs = append(a.Inputs, inBuf)
 
@@ -90,17 +81,30 @@ func utilHandler(cmd UtilCommand) http.Handler {
 			case bool:
 				val, err := strconv.ParseBool(qVal)
 				if err != nil {
-					http.Error(w, fmt.Sprintf("bad query param %q: %s", name, err), http.StatusBadRequest)
-					return
+					return fmt.Errorf("bad query param %s: %w", name, err)
 				}
 				a.Flags[name] = val
+			case string:
+				a.Flags[name] = qVal
 			}
 		}
 
 		if err := cmd.Execute(r.Context(), a); err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
+			return err
 		}
 		_, _ = io.Copy(w, out)
+		return nil
+	}
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		span, _ := tracer.SpanFromContext(r.Context())
+		span.SetTag("http.full_url", r.URL.String())
+		span.SetTag("http.content_length", r.Header.Get("Content-Length"))
+		span.SetTag("user.ip", r.Header.Get("Fly-Client-IP"))
+		span.SetTag("user.agent", r.Header.Get("User-Agent"))
+		if err := handler(w, r); err != nil {
+			http.Error(w, fmt.Sprintf("error: %s\n", err), http.StatusBadRequest)
+			span.Finish(tracer.WithError(err))
+		}
 	})
 }
