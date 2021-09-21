@@ -24,6 +24,10 @@ func newHTTPServer() http.Handler {
 	for _, cmd := range utilCommands {
 		router.Handler("POST", "/"+cmd.Name, utilHandler(cmd))
 	}
+	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_ = addSpanTags(r)
+		http.NotFoundHandler().ServeHTTP(w, r)
+	})
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		m := httpsnoop.CaptureMetrics(router, w, r)
@@ -97,14 +101,19 @@ func utilHandler(cmd UtilCommand) http.Handler {
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		span, _ := tracer.SpanFromContext(r.Context())
-		span.SetTag("http.full_url", r.URL.String())
-		span.SetTag("http.content_length", r.Header.Get("Content-Length"))
-		span.SetTag("user.ip", r.Header.Get("Fly-Client-IP"))
-		span.SetTag("user.agent", r.Header.Get("User-Agent"))
+		span := addSpanTags(r)
 		if err := handler(w, r); err != nil {
 			http.Error(w, fmt.Sprintf("error: %s\n", err), http.StatusBadRequest)
 			span.Finish(tracer.WithError(err))
 		}
 	})
+}
+
+func addSpanTags(r *http.Request) tracer.Span {
+	span, _ := tracer.SpanFromContext(r.Context())
+	span.SetTag("http.full_url", r.URL.String())
+	span.SetTag("http.content_length", r.Header.Get("Content-Length"))
+	span.SetTag("user.ip", r.Header.Get("Fly-Client-IP"))
+	span.SetTag("user.agent", r.Header.Get("User-Agent"))
+	return span
 }
