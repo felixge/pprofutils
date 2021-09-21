@@ -36,76 +36,92 @@ func newHTTPServer() http.Handler {
 }
 
 func utilHandler(cmd UtilCommand) http.Handler {
-	handler := func(w http.ResponseWriter, r *http.Request) error {
-		var in io.Reader
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		span := addSpanTags(r)
+		defer func() {
+			span.Finish(tracer.WithError(err))
+		}()
+
 		out := &bytes.Buffer{}
 		a := &UtilArgs{Output: out}
-		contentType := r.Header.Get("Content-Type")
-		if strings.HasPrefix(contentType, "multipart/form-data") {
-			if err := r.ParseMultipartForm(maxPostSize); err != nil {
-				return fmt.Errorf("upload too big: %w", err)
-			}
 
-			var first *multipart.FileHeader
-			for _, files := range r.MultipartForm.File {
-				for _, file := range files {
-					if first != nil {
-						return errors.New("only one file is expected to be uploaded")
+		upload := func() error {
+			var in io.Reader
+			contentType := r.Header.Get("Content-Type")
+			if strings.HasPrefix(contentType, "multipart/form-data") {
+				if err := r.ParseMultipartForm(maxPostSize); err != nil {
+					return fmt.Errorf("upload too big: %w", err)
+				}
+
+				var first *multipart.FileHeader
+				for _, files := range r.MultipartForm.File {
+					for _, file := range files {
+						if first != nil {
+							return errors.New("only one file is expected to be uploaded")
+						}
+						first = file
 					}
-					first = file
 				}
-			}
 
-			file, err := first.Open()
-			if err != nil {
-				return fmt.Errorf("failed to open file: %w", err)
-			}
-			defer file.Close()
-
-			in = file
-		} else {
-			in = io.LimitReader(r.Body, maxPostSize)
-		}
-
-		inBuf, err := ioutil.ReadAll(in)
-		if err != nil {
-			return fmt.Errorf("upload error: %w", err)
-		}
-		a.Inputs = append(a.Inputs, inBuf)
-
-		a.Flags = make(map[string]interface{})
-		for name, flag := range cmd.Flags {
-			a.Flags[name] = flag.Default
-			if _, ok := r.URL.Query()[name]; !ok {
-				continue
-			}
-
-			qVal := r.URL.Query().Get(name)
-			switch flag.Default.(type) {
-			case bool:
-				val, err := strconv.ParseBool(qVal)
+				file, err := first.Open()
 				if err != nil {
-					return fmt.Errorf("bad query param %s: %w", name, err)
+					return fmt.Errorf("failed to open file: %w", err)
 				}
-				a.Flags[name] = val
-			case string:
-				a.Flags[name] = qVal
+				defer file.Close()
+
+				in = file
+			} else {
+				in = io.LimitReader(r.Body, maxPostSize)
 			}
+
+			inBuf, err := ioutil.ReadAll(in)
+			if err != nil {
+				return fmt.Errorf("upload error: %w", err)
+			}
+			a.Inputs = append(a.Inputs, inBuf)
+
+			a.Flags = make(map[string]interface{})
+			for name, flag := range cmd.Flags {
+				a.Flags[name] = flag.Default
+				if _, ok := r.URL.Query()[name]; !ok {
+					continue
+				}
+
+				qVal := r.URL.Query().Get(name)
+				switch flag.Default.(type) {
+				case bool:
+					val, err := strconv.ParseBool(qVal)
+					if err != nil {
+						return fmt.Errorf("bad query param %s: %w", name, err)
+					}
+					a.Flags[name] = val
+				case string:
+					a.Flags[name] = qVal
+				}
+			}
+			return nil
 		}
 
-		if err := cmd.Execute(r.Context(), a); err != nil {
-			return err
-		}
-		_, _ = io.Copy(w, out)
-		return nil
-	}
-
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		span := addSpanTags(r)
-		if err := handler(w, r); err != nil {
+		uploadSpan, _ := tracer.StartSpanFromContext(r.Context(), "upload")
+		err = upload()
+		uploadSpan.Finish(tracer.WithError(err))
+		if err != nil {
 			http.Error(w, fmt.Sprintf("error: %s\n", err), http.StatusBadRequest)
-			span.Finish(tracer.WithError(err))
+			return
 		}
+
+		execSpan, execCtx := tracer.StartSpanFromContext(r.Context(), "exec")
+		err = cmd.Execute(execCtx, a)
+		execSpan.Finish(tracer.WithError(err))
+		if err != nil {
+			http.Error(w, fmt.Sprintf("error: %s\n", err), http.StatusBadRequest)
+			return
+		}
+
+		respondSpan, _ := tracer.StartSpanFromContext(r.Context(), "respond")
+		_, err = io.Copy(w, out)
+		respondSpan.Finish(tracer.WithError(err))
 	})
 }
 

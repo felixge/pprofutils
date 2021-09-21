@@ -1,6 +1,4 @@
-# fly.toml file generated for twilight-butterfly-3611 on 2021-09-20T20:00:21+02:00
-
-app = "twilight-butterfly-3611"
+app = "pprof-to"
 
 kill_signal = "SIGINT"
 kill_timeout = 5
