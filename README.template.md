@@ -6,7 +6,7 @@
 pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md). You can use it as a command line utility or as a free web service.
 
 - [**Install**](#install)
-- [**Utilities**](#utilities): {{range $i := .}}{{if $i}} · {{end}}[{{.Name}}](#{{.Name}}){{end}}
+- [**Utilities**](#utilities): {{range $i, $util := .}}{{if $i}} · {{end}}[{{.Name}}](#{{.Name}}){{end}}
 - [**Use Cases**](#use-cases): [Convert linux perf profiles to pprof](#convert-linux-perf-profiles-to-pprof)
 - [**License**](#license)
 

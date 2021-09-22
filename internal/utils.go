@@ -3,6 +3,7 @@ package internal
 import (
 	"context"
 	"io"
+	"sort"
 	"strings"
 
 	"github.com/felixge/pprofutils/utils"
@@ -40,6 +41,25 @@ Converts pprof to the same text format as go tool pprof -raw.
 		},
 		Execute: func(ctx context.Context, a *UtilArgs) error {
 			return (&utils.Raw{
+				Input:  a.Inputs[0],
+				Output: a.Output,
+			}).Execute(ctx)
+		},
+	},
+	{
+		Name:       "avg",
+		ShortUsage: "<input file> <output file>",
+		ShortHelp:  "Creates a profile with the average value per sample",
+		LongHelp: strings.TrimSpace(`
+Takes a block or mutex profile and creates a profile that contains the average
+time per contention by dividing the nanoseconds or value in the profile by the
+sample count value.
+`) + commonSuffix,
+		Examples: []Example{
+			{Name: "Convert block profile to avg time", In: []string{"pprof", "png"}, Out: []string{"pprof", "png"}},
+		},
+		Execute: func(ctx context.Context, a *UtilArgs) error {
+			return (&utils.Avg{
 				Input:  a.Inputs[0],
 				Output: a.Output,
 			}).Execute(ctx)
@@ -90,6 +110,12 @@ is useful to visualize label values in a flamegraph.
 			}).Execute(ctx)
 		},
 	},
+}
+
+func init() {
+	sort.Slice(Utils, func(i, j int) bool {
+		return Utils[i].Name < Utils[j].Name
+	})
 }
 
 type Example struct {

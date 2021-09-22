@@ -6,7 +6,7 @@
 pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md). You can use it as a command line utility or as a free web service.
 
 - [**Install**](#install)
-- [**Utilities**](#utilities):  · [json](#json) · [raw](#raw) · [folded](#folded) · [labelframes](#labelframes)
+- [**Utilities**](#utilities): [avg](#avg) · [folded](#folded) · [json](#json) · [labelframes](#labelframes) · [raw](#raw)
 - [**Use Cases**](#use-cases): [Convert linux perf profiles to pprof](#convert-linux-perf-profiles-to-pprof)
 - [**License**](#license)
 
@@ -22,66 +22,39 @@ Alternatively you can use it as a free web service hosted at https://pprof.to.
 
 ## Utilities
 
-### json
+### avg
 
-Converts from pprof to json and vice vera. The input format is automatically
-	detected and used to determine the output format.
-
-The input and output file default to "-" which means stdin or stdout.
-
-#### Use json utility via cli
-
-```
-pprofutils json <input file> <output file>
-```
-
-#### Use json utility via web service
-
-```
-curl --data-binary @<input file> pprof.to/json > <output file>
-```
-
-#### Example 1: Convert pprof to json
-```shell
-pprofutils json examples/json.in.pprof examples/json.out.json
-# or
-curl --data-binary @examples/json.in.pprof pprof.to/json > examples/json.out.json
-```
-See [examples/json.in.pprof](./examples/json.in.pprof) and [examples/json.out.json](./examples/json.out.json) for more details.
-#### Example 2: Convert json to pprof
-```shell
-pprofutils json examples/json.in.json examples/json.out.pprof
-# or
-curl --data-binary @examples/json.in.json pprof.to/json > examples/json.out.pprof
-```
-See [examples/json.in.json](./examples/json.in.json) and [examples/json.out.pprof](./examples/json.out.pprof) for more details.
-
-
-### raw
-
-Converts pprof to the same text format as go tool pprof -raw.
+Takes a block or mutex profile and creates a profile that contains the average
+time per contention by dividing the nanoseconds or value in the profile by the
+sample count value.
 
 The input and output file default to "-" which means stdin or stdout.
 
-#### Use raw utility via cli
+#### Use avg utility via cli
 
 ```
-pprofutils raw <input file> <output file>
+pprofutils avg <input file> <output file>
 ```
 
-#### Use raw utility via web service
+#### Use avg utility via web service
 
 ```
-curl --data-binary @<input file> pprof.to/raw > <output file>
+curl --data-binary @<input file> pprof.to/avg > <output file>
 ```
 
-#### Example 1: Convert pprof to raw
+#### Example 1: Convert block profile to avg time
 ```shell
-pprofutils raw examples/raw.in.pprof examples/raw.out.txt
+pprofutils avg examples/avg.in.pprof examples/avg.out.pprof
 # or
-curl --data-binary @examples/raw.in.pprof pprof.to/raw > examples/raw.out.txt
+curl --data-binary @examples/avg.in.pprof pprof.to/avg > examples/avg.out.pprof
 ```
-See [examples/raw.in.pprof](./examples/raw.in.pprof) and [examples/raw.out.txt](./examples/raw.out.txt) for more details.
+Converts the profile [examples/avg.in.pprof](./examples/avg.in.pprof) that looks like this:
+
+![](examples/avg.in.png)
+
+Into a new profile [examples/avg.out.pprof](./examples/avg.out.pprof) that looks like this:
+
+![](examples/avg.out.png)
 
 
 ### folded
@@ -144,6 +117,41 @@ main;foo;bar 3
 
 
 
+### json
+
+Converts from pprof to json and vice vera. The input format is automatically
+	detected and used to determine the output format.
+
+The input and output file default to "-" which means stdin or stdout.
+
+#### Use json utility via cli
+
+```
+pprofutils json <input file> <output file>
+```
+
+#### Use json utility via web service
+
+```
+curl --data-binary @<input file> pprof.to/json > <output file>
+```
+
+#### Example 1: Convert pprof to json
+```shell
+pprofutils json examples/json.in.pprof examples/json.out.json
+# or
+curl --data-binary @examples/json.in.pprof pprof.to/json > examples/json.out.json
+```
+See [examples/json.in.pprof](./examples/json.in.pprof) and [examples/json.out.json](./examples/json.out.json) for more details.
+#### Example 2: Convert json to pprof
+```shell
+pprofutils json examples/json.in.json examples/json.out.pprof
+# or
+curl --data-binary @examples/json.in.json pprof.to/json > examples/json.out.pprof
+```
+See [examples/json.in.json](./examples/json.in.json) and [examples/json.out.pprof](./examples/json.out.pprof) for more details.
+
+
 ### labelframes
 
 Adds virtual root frames for the each value of the selected pprof label. This
@@ -179,6 +187,33 @@ Converts the profile [examples/labelframes.in.pprof](./examples/labelframes.in.p
 Into a new profile [examples/labelframes.out.pprof](./examples/labelframes.out.pprof) that looks like this:
 
 ![](examples/labelframes.out.png)
+
+
+### raw
+
+Converts pprof to the same text format as go tool pprof -raw.
+
+The input and output file default to "-" which means stdin or stdout.
+
+#### Use raw utility via cli
+
+```
+pprofutils raw <input file> <output file>
+```
+
+#### Use raw utility via web service
+
+```
+curl --data-binary @<input file> pprof.to/raw > <output file>
+```
+
+#### Example 1: Convert pprof to raw
+```shell
+pprofutils raw examples/raw.in.pprof examples/raw.out.txt
+# or
+curl --data-binary @examples/raw.in.pprof pprof.to/raw > examples/raw.out.txt
+```
+See [examples/raw.in.pprof](./examples/raw.in.pprof) and [examples/raw.out.txt](./examples/raw.out.txt) for more details.
 
 
 
