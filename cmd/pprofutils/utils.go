@@ -12,11 +12,8 @@ const commonSuffix = "\n\n" + `The input and output file default to "-" which me
 
 var utilCommands = []UtilCommand{
 	{
-		Name: "json",
-		Flags: map[string]UtilFlag{
-			"simple": {false, "Use simplified JSON format."},
-		},
-		ShortUsage: "[-simple] <input file> <output file>",
+		Name:       "json",
+		ShortUsage: "<input file> <output file>",
 		ShortHelp:  "Converts from pprof to json and vice versa",
 		LongHelp: strings.TrimSpace(`
 Converts from pprof to json and vice vera. The input format is automatically
@@ -26,7 +23,6 @@ detected and used to determine the output format.
 			return (&utils.JSON{
 				Input:  a.Inputs[0],
 				Output: a.Output,
-				Simple: a.Flags["simple"].(bool),
 			}).Execute(ctx)
 		},
 	},
