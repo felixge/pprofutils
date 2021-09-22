@@ -5,8 +5,6 @@
 
 pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md). You can use it as a command line utility or as a free web service.
 
-The main feature is converting pprof files to Brendan Gregg's [folded text](https://github.com/brendangregg/FlameGraph#2-fold-stacks) format (output by his `stackcollapse` scripts) and vice versa.
-
 - [**Install**](#install)
 - [**Utilities**](#utilities):  · [json](#json) · [raw](#raw) · [folded](#folded) · [labelframes](#labelframes)
 - [**License**](#license)
@@ -26,36 +24,36 @@ Alternatively you can use it as a free web service hosted at https://pprof.to.
 ### json
 
 Converts from pprof to json and vice vera. The input format is automatically
-detected and used to determine the output format.
+	detected and used to determine the output format.
 
 The input and output file default to "-" which means stdin or stdout.
 
-**Command Line Usage:**
+##### Use json utility via cli
 
 ```
 pprofutils json <input file> <output file>
 ```
 
-**Rest Service Usage:**
+##### Use json utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/json > <output file>
 ```
 
-**Example:**
-
+##### Example 1: Convert pprof to json
 ```shell
 pprofutils json examples/json.in.pprof examples/json.out.json
 # or
 curl --data-binary @examples/json.in.pprof pprof.to/json > examples/json.out.json
 ```
-Converts [examples/json.in.pprof](./examples/json.in.pprof) from pprof to json, see [examples/json.out.json](./examples/json.out.json).
+See [examples/json.in.pprof](./examples/json.in.pprof) and [examples/json.out.json](./examples/json.out.json) for more details.
+##### Example 2: Convert json to pprof
 ```shell
 pprofutils json examples/json.in.json examples/json.out.pprof
 # or
 curl --data-binary @examples/json.in.json pprof.to/json > examples/json.out.pprof
 ```
-Converts [examples/json.in.json](./examples/json.in.json) from json to pprof, see [examples/json.out.pprof](./examples/json.out.pprof).
+See [examples/json.in.json](./examples/json.in.json) and [examples/json.out.pprof](./examples/json.out.pprof) for more details.
 
 
 ### raw
@@ -64,20 +62,25 @@ Converts pprof to the same text format as go tool pprof -raw.
 
 The input and output file default to "-" which means stdin or stdout.
 
-**Command Line Usage:**
+##### Use raw utility via cli
 
 ```
 pprofutils raw <input file> <output file>
 ```
 
-**Rest Service Usage:**
+##### Use raw utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/raw > <output file>
 ```
 
-**Example:**
-
+##### Example 1: Convert pprof to raw
+```shell
+pprofutils raw examples/raw.in.pprof examples/raw.out.txt
+# or
+curl --data-binary @examples/raw.in.pprof pprof.to/raw > examples/raw.out.txt
+```
+See [examples/raw.in.pprof](./examples/raw.in.pprof) and [examples/raw.out.txt](./examples/raw.out.txt) for more details.
 
 
 ### folded
@@ -87,7 +90,7 @@ format is automatically detected and used to determine the output format.
 
 The input and output file default to "-" which means stdin or stdout.
 
-**Command Line Usage:**
+##### Use folded utility via cli
 
 ```
 pprofutils folded [-headers] <input file> <output file>
@@ -96,24 +99,58 @@ FLAGS:
   -headers=false Add header column for each sample type
 ```
 
-**Rest Service Usage:**
+##### Use folded utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/folded?headers=false > <output file>
 ```
 
-**Example:**
+##### Example 1: Convert folded text to pprof
+```shell
+pprofutils folded examples/folded.in.txt examples/folded.out.pprof
+# or
+curl --data-binary @examples/folded.in.txt pprof.to/folded > examples/folded.out.pprof
+```
+Converts [examples/folded.in.txt](./examples/folded.in.txt) with the following content:
+
+```
+main;foo 5
+main;foo;bar 3
+main;foobar 4
+```
+
+Into a new profile [examples/folded.out.pprof](./examples/folded.out.pprof) that looks like this:
+
+![](examples/folded.out.png)
+##### Example 2: Convert pprof to folded text
+```shell
+pprofutils folded examples/folded.in.pprof examples/folded.out.txt
+# or
+curl --data-binary @examples/folded.in.pprof pprof.to/folded > examples/folded.out.txt
+```
+Converts the profile [examples/folded.in.pprof](./examples/folded.in.pprof) that looks like this:
+
+![](examples/folded.in.png)
+
+Into a new folded text file [examples/folded.out.txt](./examples/folded.out.txt) that looks like this:
+
+```
+main;foo 5
+main;foobar 4
+main;foo;bar 3
+
+```
 
 
 
 ### labelframes
 
-Adds virtual root frames for the given pprof label. This is useful to visualize
-label values in a flamegraph.
+Adds virtual root frames for the each value of the selected pprof label. This
+is useful to visualize label values in a flamegraph.
 
 The input and output file default to "-" which means stdin or stdout.
 
-**Command Line Usage:**
+##### Use labelframes utility via cli
 
 ```
 pprofutils labelframes -label=<label> <input file> <output file>
@@ -122,24 +159,25 @@ FLAGS:
   -label=mylabel The label key to turn into virtual frames.
 ```
 
-**Rest Service Usage:**
+##### Use labelframes utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/labelframes?label=mylabel > <output file>
 ```
 
-**Example:**
-
-```
+##### Example 1: Add root frames for pprof label values
+```shell
 pprofutils labelframes examples/labelframes.in.pprof examples/labelframes.out.pprof
+# or
+curl --data-binary @examples/labelframes.in.pprof pprof.to/labelframes > examples/labelframes.out.pprof
 ```
-Converts a profile that looks like this:
+Converts the profile [examples/labelframes.in.pprof](./examples/labelframes.in.pprof) that looks like this:
 
-![](./examples/labelframes.in.png)
+![](examples/labelframes.in.png)
 
-Into a new profile that looks like that:
+Into a new profile [examples/labelframes.out.pprof](./examples/labelframes.out.pprof) that looks like this:
 
-![](./examples/labelframes.out.png)
+![](examples/labelframes.out.png)
 
 
 ## Usage

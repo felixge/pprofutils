@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
@@ -32,7 +33,7 @@ func run() error {
 	var fns = template.FuncMap{
 		"queryflags": queryflags,
 		"defaultval": defaultval,
-		"example":    example,
+		"examples":   examples,
 	}
 
 	tmpl, err := template.New("README.md").Funcs(fns).Parse(input.String())
@@ -64,57 +65,98 @@ func queryflags(flags map[string]internal.UtilFlag) string {
 	return "?" + strings.Join(params, "&")
 }
 
-func example(util internal.Util) (string, error) {
+func examples(util internal.Util) (string, error) {
 	var (
-		b        = &strings.Builder{}
-		prefix   = filepath.Join("examples", util.Name)
-		inPprof  = prefix + ".in.pprof"
-		inPng    = prefix + ".in.png"
-		inJson   = prefix + ".in.json"
-		outPprof = prefix + ".out.pprof"
-		outPng   = prefix + ".out.png"
-		outJSON  = prefix + ".out.json"
+		b = &strings.Builder{}
 	)
 
-	if exists(inPprof) && exists(outJSON) {
-		b.WriteString("```shell\n")
-		b.WriteString(fmt.Sprintf("pprofutils %s %s %s\n", util.Name, inPprof, outJSON))
-		b.WriteString("# or\n")
-		b.WriteString(fmt.Sprintf("curl --data-binary @%s pprof.to/%s > %s\n", inPprof, util.Name, outJSON))
-		b.WriteString("```\n")
-		b.WriteString(fmt.Sprintf("Converts [%s](./%s) from pprof to json, see [%s](./%s).\n", inPprof, inPprof, outJSON, outJSON))
+	for i, e := range util.Examples {
+		pathTo := func(dir, format string) string {
+			return filepath.Join("examples", util.Name+"."+dir+"."+format)
+		}
+		combination := func(in, out []string) bool {
+			return stringsEquals(e.In, in) && stringsEquals(e.Out, out)
+		}
+
+		b.WriteString(fmt.Sprintf("##### Example %d: %s\n", i+1, e.Name))
+
+		if len(e.In) == 1 && len(e.Out) == 1 {
+			b.WriteString(simpleInOut(util.Name, pathTo("in", e.In[0]), pathTo("out", e.Out[0])))
+		} else if combination([]string{"txt"}, []string{"pprof", "png"}) {
+			inTxt, outPprof, outPng := pathTo("in", "txt"), pathTo("out", "pprof"), pathTo("out", "png")
+			inData, err := ioutil.ReadFile(inTxt)
+			if err != nil {
+				return "", err
+			}
+
+			b.WriteString(shell(util.Name, inTxt, outPprof))
+			b.WriteString(fmt.Sprintf("Converts [%s](./%s) with the following content:\n\n", inTxt, inTxt))
+			b.WriteString(fmt.Sprintf("```\n%s\n```\n\n", inData))
+			b.WriteString(outPprofImage(outPprof, outPng))
+		} else if combination([]string{"pprof", "png"}, []string{"txt"}) {
+			inPprof, inPng, outTxt := pathTo("in", "pprof"), pathTo("in", "png"), pathTo("out", "txt")
+			outData, err := ioutil.ReadFile(outTxt)
+			if err != nil {
+				return "", err
+			}
+
+			b.WriteString(shell(util.Name, inPprof, outTxt))
+			b.WriteString(inPprofImage(inPprof, inPng))
+			b.WriteString(fmt.Sprintf("Into a new folded text file [%s](./%s) that looks like this:\n\n", outTxt, outTxt))
+			b.WriteString(fmt.Sprintf("```\n%s\n```\n\n", outData))
+		} else if combination([]string{"pprof", "png"}, []string{"pprof", "png"}) {
+			inPprof, outPprof := pathTo("in", "pprof"), pathTo("out", "pprof")
+			inPng, outPng := pathTo("in", "png"), pathTo("out", "png")
+			b.WriteString(shell(util.Name, inPprof, outPprof))
+			b.WriteString(inPprofImage(inPprof, inPng))
+			b.WriteString(outPprofImage(outPprof, outPng))
+		}
 	}
-
-	if exists(inJson) && exists(outPprof) {
-		b.WriteString("```shell\n")
-		b.WriteString(fmt.Sprintf("pprofutils %s %s %s\n", util.Name, inJson, outPprof))
-		b.WriteString("# or\n")
-		b.WriteString(fmt.Sprintf("curl --data-binary @%s pprof.to/%s > %s\n", inJson, util.Name, outPprof))
-		b.WriteString("```\n")
-		b.WriteString(fmt.Sprintf("Converts [%s](./%s) from json to pprof, see [%s](./%s).\n", inJson, inJson, outPprof, outPprof))
-	}
-
-	if exists(inPng) && exists(outPng) {
-		fmt.Fprintf(
-			b,
-			"```\npprofutils %s %s %s\n```\n",
-			util.Name,
-			inPprof,
-			outPprof,
-		)
-		fmt.Fprintf(b, "Converts a profile that looks like this:\n\n![](./%s)\n\n", inPng)
-		fmt.Fprintf(b, "Into a new profile that looks like that:\n\n![](./%s)\n", outPng)
-	}
-
-	//if exists(inputPng) {
-	//return fmt.Sprintf("![](./%s)", inputPng)
-	//}
-
-	//fmt.Fprintf(os.Stderr, "%s\n", util.Name)
 	return b.String(), nil
+}
+
+func simpleInOut(util, in, out string) string {
+	b := &strings.Builder{}
+	b.WriteString(shell(util, in, out))
+	b.WriteString(fmt.Sprintf("See [%s](./%s) and [%s](./%s) for more details.\n", in, in, out, out))
+	return b.String()
+}
+
+func shell(util, in, out string) string {
+	b := &strings.Builder{}
+	b.WriteString("```shell\n")
+	b.WriteString(fmt.Sprintf("pprofutils %s %s %s\n", util, in, out))
+	b.WriteString("# or\n")
+	b.WriteString(fmt.Sprintf("curl --data-binary @%s pprof.to/%s > %s\n", in, util, out))
+	b.WriteString("```\n")
+	return b.String()
+}
+
+func inPprofImage(inPprof, inPng string) string {
+	b := &strings.Builder{}
+	b.WriteString(fmt.Sprintf("Converts the profile [%s](./%s) that looks like this:\n\n", inPprof, inPprof))
+	b.WriteString(fmt.Sprintf("![](%s)\n\n", inPng))
+	return b.String()
+}
+
+func outPprofImage(outPprof, outPng string) string {
+	b := &strings.Builder{}
+	b.WriteString(fmt.Sprintf("Into a new profile [%s](./%s) that looks like this:\n\n", outPprof, outPprof))
+	b.WriteString(fmt.Sprintf("![](%s)\n", outPng))
+	return b.String()
 }
 
 func exists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil
+}
+
+func stringsEquals(a, b []string) bool {
+	aCopy := make([]string, len(a))
+	copy(aCopy, a)
+	bCopy := make([]string, len(b))
+	copy(bCopy, b)
+	sort.Strings(aCopy)
+	sort.Strings(bCopy)
+	return fmt.Sprint(aCopy) == fmt.Sprint(bCopy)
 }

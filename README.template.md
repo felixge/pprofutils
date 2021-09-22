@@ -5,8 +5,6 @@
 
 pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md). You can use it as a command line utility or as a free web service.
 
-The main feature is converting pprof files to Brendan Gregg's [folded text](https://github.com/brendangregg/FlameGraph#2-fold-stacks) format (output by his `stackcollapse` scripts) and vice versa.
-
 - [**Install**](#install)
 - [**Utilities**](#utilities): {{range $i := .}}{{if $i}} · {{end}}[{{.Name}}](#{{.Name}}){{end}}
 - [**License**](#license)
@@ -27,7 +25,7 @@ Alternatively you can use it as a free web service hosted at https://pprof.to.
 
 {{.LongHelp}}
 
-**Command Line Usage:**
+##### Use {{.Name}} utility via cli
 
 ```
 pprofutils {{.Name}} {{.ShortUsage}}{{if .Flags}}
@@ -36,15 +34,13 @@ FLAGS:{{range $name, $flag := .Flags}}
   -{{$name}}={{defaultval .Default}} {{.Usage}}{{end}}{{else}}{{end}}
 ```
 
-**Rest Service Usage:**
+##### Use {{.Name}} utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/{{.Name}}{{queryflags .Flags}} > <output file>
 ```
 
-**Example:**
-
-{{example .}}
+{{examples .}}
 
 {{end}}## Usage
 
