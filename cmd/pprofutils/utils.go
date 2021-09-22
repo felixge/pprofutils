@@ -20,7 +20,7 @@ var utilCommands = []UtilCommand{
 		ShortHelp:  "Converts from pprof to json and vice versa",
 		LongHelp: strings.TrimSpace(`
 Converts from pprof to json and vice vera. The input format is automatically
-detected.
+detected and used to determine the output format.
 `) + commonSuffix,
 		Execute: func(ctx context.Context, a *UtilArgs) error {
 			return (&utils.JSON{
@@ -45,16 +45,21 @@ Converts pprof to the same text format as go tool pprof -raw
 		},
 	},
 	{
-		Name:       "folded",
-		ShortUsage: "<input file> <output file>",
-		ShortHelp:  "Converts pprof to Brendan Gregg's folded text format",
+		Name: "folded",
+		Flags: map[string]UtilFlag{
+			"headers": {false, "Add header column for each sample type"},
+		},
+		ShortUsage: "[-headers] <input file> <output file>",
+		ShortHelp:  "Converts pprof to Brendan Gregg's folded text format and vice versa",
 		LongHelp: strings.TrimSpace(`
-Converts pprof to Brendan Gregg's folded text format.
+Converts pprof to Brendan Gregg's folded text format and vice versa. The input
+format is automatically detected and used to determine the output format.
 `) + commonSuffix,
 		Execute: func(ctx context.Context, a *UtilArgs) error {
 			return (&utils.Folded{
-				Input:  a.Inputs[0],
-				Output: a.Output,
+				Input:   a.Inputs[0],
+				Output:  a.Output,
+				Headers: a.Flags["headers"].(bool),
 			}).Execute(ctx)
 		},
 	},

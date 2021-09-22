@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bytes"
 	"context"
 	"io"
 
@@ -9,15 +10,25 @@ import (
 )
 
 type Folded struct {
-	Input  []byte
-	Output io.Writer
+	Input   []byte
+	Output  io.Writer
+	Headers bool
 }
 
 func (f *Folded) Execute(ctx context.Context) error {
 	prof, err := profile.ParseData(f.Input)
+	if err == nil {
+		p := legacy.Protobuf{
+			SampleTypes: f.Headers,
+		}
+		return p.Convert(prof, f.Output)
+	}
+
+	// Invalid pprof, assume it's folded text.
+	t := &legacy.Text{}
+	prof, err = t.Convert(bytes.NewReader(f.Input))
 	if err != nil {
 		return err
 	}
-	p := legacy.Protobuf{}
-	return p.Convert(prof, f.Output)
+	return prof.Write(f.Output)
 }
