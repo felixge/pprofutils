@@ -44,7 +44,7 @@ FLAGS:
 #### Use anon utility via web service
 
 ```
-curl --data-binary @<input file> pprof.to/anon?whitelist=^runtime;^net;^encoding > <output file>
+curl --data-binary @<input file> 'pprof.to/anon?whitelist=^runtime;^net;^encoding' > <output file>
 ```
 
 #### Example 1: Anonymize a CPU profile
@@ -81,7 +81,7 @@ pprofutils avg <input file> <output file>
 #### Use avg utility via web service
 
 ```
-curl --data-binary @<input file> pprof.to/avg > <output file>
+curl --data-binary @<input file> 'pprof.to/avg' > <output file>
 ```
 
 #### Example 1: Convert block profile to avg time
@@ -118,7 +118,7 @@ FLAGS:
 #### Use folded utility via web service
 
 ```
-curl --data-binary @<input file> pprof.to/folded?headers=false > <output file>
+curl --data-binary @<input file> 'pprof.to/folded?headers=false' > <output file>
 ```
 
 #### Example 1: Convert folded text to pprof
@@ -175,7 +175,7 @@ pprofutils json <input file> <output file>
 #### Use json utility via web service
 
 ```
-curl --data-binary @<input file> pprof.to/json > <output file>
+curl --data-binary @<input file> 'pprof.to/json' > <output file>
 ```
 
 #### Example 1: Convert pprof to json
@@ -213,7 +213,7 @@ FLAGS:
 #### Use labelframes utility via web service
 
 ```
-curl --data-binary @<input file> pprof.to/labelframes?label=mylabel > <output file>
+curl --data-binary @<input file> 'pprof.to/labelframes?label=mylabel' > <output file>
 ```
 
 #### Example 1: Add root frames for pprof label values
@@ -246,7 +246,7 @@ pprofutils raw <input file> <output file>
 #### Use raw utility via web service
 
 ```
-curl --data-binary @<input file> pprof.to/raw > <output file>
+curl --data-binary @<input file> 'pprof.to/raw' > <output file>
 ```
 
 #### Example 1: Convert pprof to raw

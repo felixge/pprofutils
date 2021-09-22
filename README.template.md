@@ -38,7 +38,7 @@ FLAGS:{{range $name, $flag := .Flags}}
 #### Use {{.Name}} utility via web service
 
 ```
-curl --data-binary @<input file> pprof.to/{{.Name}}{{queryflags .Flags}} > <output file>
+curl --data-binary @<input file> 'pprof.to/{{.Name}}{{queryflags .Flags}}' > <output file>
 ```
 
 {{examples .}}
