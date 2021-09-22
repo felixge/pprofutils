@@ -4,8 +4,8 @@ README.md:
 
 .PHONY: deploy
 deploy:
-	go run ./scripts/deploy_pprofutils.bash
+	./scripts/deploy_pprofutils.bash
 
 .PHONY: deploy-agent
 deploy-agent:
-	go run ./scripts/deploy_agent.bash
+	./scripts/deploy_agent.bash
