@@ -21,9 +21,15 @@ const maxPostSize = 128 * 1024 * 1024
 
 func newHTTPServer() http.Handler {
 	router := httptrace.New()
+	router.HandlerFunc("GET", "/", func(w http.ResponseWriter, _ *http.Request) {
+		w.Header().Set("Location", "https://github.com/felixge/pprofutils")
+		w.WriteHeader(http.StatusFound)
+	})
+
 	for _, cmd := range utilCommands {
 		router.Handler("POST", "/"+cmd.Name, utilHandler(cmd))
 	}
+
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		_ = addSpanTags(r)
 		http.NotFoundHandler().ServeHTTP(w, r)
