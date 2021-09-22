@@ -25,12 +25,15 @@ func (a *Anon) Execute(ctx context.Context) error {
 	}
 
 	var whitelisted []*regexp.Regexp
-	for _, w := range strings.Split(a.Whitelist, ";") {
-		r, err := regexp.Compile(w)
-		if err != nil {
-			return err
+	wl := strings.TrimSpace(a.Whitelist)
+	if len(wl) > 0 {
+		for _, w := range strings.Split(wl, ";") {
+			r, err := regexp.Compile(w)
+			if err != nil {
+				return err
+			}
+			whitelisted = append(whitelisted, r)
 		}
-		whitelisted = append(whitelisted, r)
 	}
 
 outer:

@@ -12,7 +12,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/peterbourgon/ff/v3 v3.1.0
 	github.com/philhofer/fwd v1.1.1 // indirect
-	github.com/wolfeidau/humanhash v1.1.0 // indirect
+	github.com/wolfeidau/humanhash v1.1.0
 	golang.org/x/time v0.0.0-20210723032227-1f47c861a9ac // indirect
 	gopkg.in/DataDog/dd-trace-go.v1 v1.33.0
 )
