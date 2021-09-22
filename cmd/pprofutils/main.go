@@ -12,7 +12,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/felixge/pprofutils/internal"
+	"github.com/felixge/pprofutils/v2/internal"
 	"github.com/peterbourgon/ff/v3/ffcli"
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 	"gopkg.in/DataDog/dd-trace-go.v1/profiler"

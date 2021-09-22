@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	"github.com/felixge/httpsnoop"
-	"github.com/felixge/pprofutils/internal"
+	"github.com/felixge/pprofutils/v2/internal"
 	httptrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/julienschmidt/httprouter"
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )

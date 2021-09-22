@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/felixge/pprofutils/internal"
+	"github.com/felixge/pprofutils/v2/internal"
 	"github.com/google/pprof/profile"
 	"github.com/wolfeidau/humanhash"
 )

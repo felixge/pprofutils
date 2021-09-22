@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/felixge/pprofutils/utils"
+	"github.com/felixge/pprofutils/v2/utils"
 )
 
 const commonSuffix = "\n\n" + `The input and output file default to "-" which means stdin or stdout.`

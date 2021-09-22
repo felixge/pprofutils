@@ -5,7 +5,7 @@ import (
 	"context"
 	"io"
 
-	"github.com/felixge/pprofutils/internal/legacy"
+	"github.com/felixge/pprofutils/v2/internal/legacy"
 	"github.com/google/pprof/profile"
 )
 

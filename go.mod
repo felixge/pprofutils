@@ -1,4 +1,4 @@
-module github.com/felixge/pprofutils
+module github.com/felixge/pprofutils/v2
 
 go 1.16
 

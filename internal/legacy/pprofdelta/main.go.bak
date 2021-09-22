@@ -7,8 +7,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/felixge/pprofutils"
-	"github.com/felixge/pprofutils/internal"
+	"github.com/felixge/pprofutils/v2"
+	"github.com/felixge/pprofutils/v2/internal"
 	"github.com/google/pprof/profile"
 )
 

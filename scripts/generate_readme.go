@@ -13,7 +13,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/felixge/pprofutils/internal"
+	"github.com/felixge/pprofutils/v2/internal"
 )
 
 func main() {

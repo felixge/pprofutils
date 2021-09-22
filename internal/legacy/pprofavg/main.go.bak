@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/felixge/pprofutils/internal"
+	"github.com/felixge/pprofutils/v2/internal"
 	"github.com/google/pprof/profile"
 )
 
