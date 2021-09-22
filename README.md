@@ -28,26 +28,26 @@ Converts from pprof to json and vice vera. The input format is automatically
 
 The input and output file default to "-" which means stdin or stdout.
 
-##### Use json utility via cli
+#### Use json utility via cli
 
 ```
 pprofutils json <input file> <output file>
 ```
 
-##### Use json utility via web service
+#### Use json utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/json > <output file>
 ```
 
-##### Example 1: Convert pprof to json
+#### Example 1: Convert pprof to json
 ```shell
 pprofutils json examples/json.in.pprof examples/json.out.json
 # or
 curl --data-binary @examples/json.in.pprof pprof.to/json > examples/json.out.json
 ```
 See [examples/json.in.pprof](./examples/json.in.pprof) and [examples/json.out.json](./examples/json.out.json) for more details.
-##### Example 2: Convert json to pprof
+#### Example 2: Convert json to pprof
 ```shell
 pprofutils json examples/json.in.json examples/json.out.pprof
 # or
@@ -62,19 +62,19 @@ Converts pprof to the same text format as go tool pprof -raw.
 
 The input and output file default to "-" which means stdin or stdout.
 
-##### Use raw utility via cli
+#### Use raw utility via cli
 
 ```
 pprofutils raw <input file> <output file>
 ```
 
-##### Use raw utility via web service
+#### Use raw utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/raw > <output file>
 ```
 
-##### Example 1: Convert pprof to raw
+#### Example 1: Convert pprof to raw
 ```shell
 pprofutils raw examples/raw.in.pprof examples/raw.out.txt
 # or
@@ -90,7 +90,7 @@ format is automatically detected and used to determine the output format.
 
 The input and output file default to "-" which means stdin or stdout.
 
-##### Use folded utility via cli
+#### Use folded utility via cli
 
 ```
 pprofutils folded [-headers] <input file> <output file>
@@ -99,13 +99,13 @@ FLAGS:
   -headers=false Add header column for each sample type
 ```
 
-##### Use folded utility via web service
+#### Use folded utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/folded?headers=false > <output file>
 ```
 
-##### Example 1: Convert folded text to pprof
+#### Example 1: Convert folded text to pprof
 ```shell
 pprofutils folded examples/folded.in.txt examples/folded.out.pprof
 # or
@@ -122,7 +122,7 @@ main;foobar 4
 Into a new profile [examples/folded.out.pprof](./examples/folded.out.pprof) that looks like this:
 
 ![](examples/folded.out.png)
-##### Example 2: Convert pprof to folded text
+#### Example 2: Convert pprof to folded text
 ```shell
 pprofutils folded examples/folded.in.pprof examples/folded.out.txt
 # or
@@ -150,7 +150,7 @@ is useful to visualize label values in a flamegraph.
 
 The input and output file default to "-" which means stdin or stdout.
 
-##### Use labelframes utility via cli
+#### Use labelframes utility via cli
 
 ```
 pprofutils labelframes -label=<label> <input file> <output file>
@@ -159,13 +159,13 @@ FLAGS:
   -label=mylabel The label key to turn into virtual frames.
 ```
 
-##### Use labelframes utility via web service
+#### Use labelframes utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/labelframes?label=mylabel > <output file>
 ```
 
-##### Example 1: Add root frames for pprof label values
+#### Example 1: Add root frames for pprof label values
 ```shell
 pprofutils labelframes examples/labelframes.in.pprof examples/labelframes.out.pprof
 # or

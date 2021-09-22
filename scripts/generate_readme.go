@@ -78,7 +78,7 @@ func examples(util internal.Util) (string, error) {
 			return stringsEquals(e.In, in) && stringsEquals(e.Out, out)
 		}
 
-		b.WriteString(fmt.Sprintf("##### Example %d: %s\n", i+1, e.Name))
+		b.WriteString(fmt.Sprintf("#### Example %d: %s\n", i+1, e.Name))
 
 		if len(e.In) == 1 && len(e.Out) == 1 {
 			b.WriteString(simpleInOut(util.Name, pathTo("in", e.In[0]), pathTo("out", e.Out[0])))

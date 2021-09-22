@@ -25,7 +25,7 @@ Alternatively you can use it as a free web service hosted at https://pprof.to.
 
 {{.LongHelp}}
 
-##### Use {{.Name}} utility via cli
+#### Use {{.Name}} utility via cli
 
 ```
 pprofutils {{.Name}} {{.ShortUsage}}{{if .Flags}}
@@ -34,7 +34,7 @@ FLAGS:{{range $name, $flag := .Flags}}
   -{{$name}}={{defaultval .Default}} {{.Usage}}{{end}}{{else}}{{end}}
 ```
 
-##### Use {{.Name}} utility via web service
+#### Use {{.Name}} utility via web service
 
 ```
 curl --data-binary @<input file> pprof.to/{{.Name}}{{queryflags .Flags}} > <output file>
