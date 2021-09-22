@@ -9,7 +9,6 @@ processes = []
   buildpacks = ["gcr.io/paketo-buildpacks/go"]
   [build.args]
     BP_GO_TARGETS = "./cmd/pprofutils"
-    BP_GO_BUILD_LDFLAGS = "-X main.variable=some-value"
 
 [env]
   PORT = "8080"
