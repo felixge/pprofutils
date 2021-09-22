@@ -1,4 +1,4 @@
-package main
+package internal
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 
 const commonSuffix = "\n\n" + `The input and output file default to "-" which means stdin or stdout.`
 
-var utilCommands = []UtilCommand{
+var Utils = []Util{
 	{
 		Name:       "json",
 		ShortUsage: "<input file> <output file>",
@@ -31,7 +31,7 @@ detected and used to determine the output format.
 		ShortUsage: "<input file> <output file>",
 		ShortHelp:  "Converts pprof to the same text format as go tool pprof -raw",
 		LongHelp: strings.TrimSpace(`
-Converts pprof to the same text format as go tool pprof -raw
+Converts pprof to the same text format as go tool pprof -raw.
 `) + commonSuffix,
 		Execute: func(ctx context.Context, a *UtilArgs) error {
 			return (&utils.Raw{
@@ -62,7 +62,7 @@ format is automatically detected and used to determine the output format.
 	{
 		Name: "labelframes",
 		Flags: map[string]UtilFlag{
-			"label": {"", "The label key to turn into virtual frames."},
+			"label": {"mylabel", "The label key to turn into virtual frames."},
 		},
 		ShortUsage: "-label=<label> <input file> <output file>",
 		ShortHelp:  "Adds virtual root frames for the given pprof label",
@@ -80,7 +80,7 @@ label values in a flamegraph.
 	},
 }
 
-type UtilCommand struct {
+type Util struct {
 	Name       string
 	ShortUsage string
 	ShortHelp  string

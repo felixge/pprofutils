@@ -8,7 +8,7 @@ pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go
 The main feature is converting pprof files to Brendan Gregg's [folded text](https://github.com/brendangregg/FlameGraph#2-fold-stacks) format (output by his `stackcollapse` scripts) and vice versa.
 
 - [**Install**](#install)
-- [**Utilities**](#utilities):  · [json](#json) · [raw](#raw) · [folded](#folded) · [labelframes](#labelframes)
+- [**Utilities**](#utilities): {{range $i := .}}{{if $i}} · {{end}}[{{.Name}}](#{{.Name}}){{end}}
 - [**License**](#license)
 
 ## Install
@@ -23,126 +23,30 @@ Alternatively you can use it as a free web service hosted at https://pprof.to.
 
 ## Utilities
 
-### json
+{{range $i := .}}### {{.Name}}
 
-Converts from pprof to json and vice vera. The input format is automatically
-detected and used to determine the output format.
-
-The input and output file default to "-" which means stdin or stdout.
+{{.LongHelp}}
 
 **Command Line Usage:**
 
 ```
-pprofutils json <input file> <output file>
+pprofutils {{.Name}} {{.ShortUsage}}{{if .Flags}}
+
+FLAGS:{{range $name, $flag := .Flags}}
+  -{{$name}}={{defaultval .Default}} {{.Usage}}{{end}}{{else}}{{end}}
 ```
 
 **Rest Service Usage:**
 
 ```
-curl --data-binary @<input file> pprof.to/json > <output file>
+curl --data-binary @<input file> pprof.to/{{.Name}}{{queryflags .Flags}} > <output file>
 ```
 
 **Example:**
 
-```shell
-pprofutils json examples/json.in.pprof examples/json.out.json
-# or
-curl --data-binary @examples/json.in.pprof pprof.to/json > examples/json.out.json
-```
-Converts [examples/json.in.pprof](./examples/json.in.pprof) from pprof to json, see [examples/json.out.json](./examples/json.out.json).
-```shell
-pprofutils json examples/json.in.json examples/json.out.pprof
-# or
-curl --data-binary @examples/json.in.json pprof.to/json > examples/json.out.pprof
-```
-Converts [examples/json.in.json](./examples/json.in.json) from json to pprof, see [examples/json.out.pprof](./examples/json.out.pprof).
+{{example .}}
 
-
-### raw
-
-Converts pprof to the same text format as go tool pprof -raw.
-
-The input and output file default to "-" which means stdin or stdout.
-
-**Command Line Usage:**
-
-```
-pprofutils raw <input file> <output file>
-```
-
-**Rest Service Usage:**
-
-```
-curl --data-binary @<input file> pprof.to/raw > <output file>
-```
-
-**Example:**
-
-
-
-### folded
-
-Converts pprof to Brendan Gregg's folded text format and vice versa. The input
-format is automatically detected and used to determine the output format.
-
-The input and output file default to "-" which means stdin or stdout.
-
-**Command Line Usage:**
-
-```
-pprofutils folded [-headers] <input file> <output file>
-
-FLAGS:
-  -headers=false Add header column for each sample type
-```
-
-**Rest Service Usage:**
-
-```
-curl --data-binary @<input file> pprof.to/folded?headers=false > <output file>
-```
-
-**Example:**
-
-
-
-### labelframes
-
-Adds virtual root frames for the given pprof label. This is useful to visualize
-label values in a flamegraph.
-
-The input and output file default to "-" which means stdin or stdout.
-
-**Command Line Usage:**
-
-```
-pprofutils labelframes -label=<label> <input file> <output file>
-
-FLAGS:
-  -label=mylabel The label key to turn into virtual frames.
-```
-
-**Rest Service Usage:**
-
-```
-curl --data-binary @<input file> pprof.to/labelframes?label=mylabel > <output file>
-```
-
-**Example:**
-
-```
-pprofutils labelframes examples/labelframes.in.pprof examples/labelframes.out.pprof
-```
-Converts a profile that looks like this:
-
-![](./examples/labelframes.in.png)
-
-Into a new profile that looks like that:
-
-![](./examples/labelframes.out.png)
-
-
-## Usage
+{{end}}## Usage
 
 Convert a pprof file to folded stack text:
 

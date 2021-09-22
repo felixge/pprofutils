@@ -1,0 +1,2377 @@
+{
+  "SampleType": [
+    {
+      "Type": "samples",
+      "Unit": "count"
+    },
+    {
+      "Type": "cpu",
+      "Unit": "nanoseconds"
+    }
+  ],
+  "DefaultSampleType": "",
+  "Sample": [
+    {
+      "Location": [
+        {
+          "ID": 1,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 20393855,
+          "Line": [
+            {
+              "Function": {
+                "ID": 1,
+                "Name": "main.computeSum",
+                "SystemName": "main.computeSum",
+                "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+                "StartLine": 0
+              },
+              "Line": 39
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 2,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 20394226,
+          "Line": [
+            {
+              "Function": {
+                "ID": 2,
+                "Name": "main.run.func2",
+                "SystemName": "main.run.func2",
+                "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+                "StartLine": 0
+              },
+              "Line": 31
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 3,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 20393208,
+          "Line": [
+            {
+              "Function": {
+                "ID": 3,
+                "Name": "golang.org/x/sync/errgroup.(*Group).Go.func1",
+                "SystemName": "golang.org/x/sync/errgroup.(*Group).Go.func1",
+                "Filename": "/Users/felix.geisendoerfer/go/pkg/mod/golang.org/x/sync@v0.0.0-20201207232520-09787c993a3a/errgroup/errgroup.go",
+                "StartLine": 0
+              },
+              "Line": 57
+            }
+          ],
+          "IsFolded": false
+        }
+      ],
+      "Value": [
+        19,
+        190000000
+      ],
+      "Label": null,
+      "NumLabel": null,
+      "NumUnit": null
+    },
+    {
+      "Location": [
+        {
+          "ID": 4,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17240512,
+          "Line": [
+            {
+              "Function": {
+                "ID": 4,
+                "Name": "runtime.asyncPreempt",
+                "SystemName": "runtime.asyncPreempt",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/preempt_amd64.s",
+                "StartLine": 0
+              },
+              "Line": 7
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 5,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 20393854,
+          "Line": [
+            {
+              "Function": {
+                "ID": 1,
+                "Name": "main.computeSum",
+                "SystemName": "main.computeSum",
+                "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+                "StartLine": 0
+              },
+              "Line": 37
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 2,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 20394226,
+          "Line": [
+            {
+              "Function": {
+                "ID": 2,
+                "Name": "main.run.func2",
+                "SystemName": "main.run.func2",
+                "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+                "StartLine": 0
+              },
+              "Line": 31
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 3,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 20393208,
+          "Line": [
+            {
+              "Function": {
+                "ID": 3,
+                "Name": "golang.org/x/sync/errgroup.(*Group).Go.func1",
+                "SystemName": "golang.org/x/sync/errgroup.(*Group).Go.func1",
+                "Filename": "/Users/felix.geisendoerfer/go/pkg/mod/golang.org/x/sync@v0.0.0-20201207232520-09787c993a3a/errgroup/errgroup.go",
+                "StartLine": 0
+              },
+              "Line": 57
+            }
+          ],
+          "IsFolded": false
+        }
+      ],
+      "Value": [
+        5,
+        50000000
+      ],
+      "Label": null,
+      "NumLabel": null,
+      "NumUnit": null
+    },
+    {
+      "Location": [
+        {
+          "ID": 6,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17139096,
+          "Line": [
+            {
+              "Function": {
+                "ID": 5,
+                "Name": "runtime.pthread_cond_wait",
+                "SystemName": "runtime.pthread_cond_wait",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+                "StartLine": 0
+              },
+              "Line": 414
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 7,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 16994732,
+          "Line": [
+            {
+              "Function": {
+                "ID": 6,
+                "Name": "runtime.semasleep",
+                "SystemName": "runtime.semasleep",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/os_darwin.go",
+                "StartLine": 0
+              },
+              "Line": 63
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 8,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 16834054,
+          "Line": [
+            {
+              "Function": {
+                "ID": 7,
+                "Name": "runtime.notesleep",
+                "SystemName": "runtime.notesleep",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/lock_sema.go",
+                "StartLine": 0
+              },
+              "Line": 181
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 9,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17034852,
+          "Line": [
+            {
+              "Function": {
+                "ID": 8,
+                "Name": "runtime.stopm",
+                "SystemName": "runtime.stopm",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 1924
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 10,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17040958,
+          "Line": [
+            {
+              "Function": {
+                "ID": 9,
+                "Name": "runtime.findrunnable",
+                "SystemName": "runtime.findrunnable",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2485
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 11,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17044150,
+          "Line": [
+            {
+              "Function": {
+                "ID": 10,
+                "Name": "runtime.schedule",
+                "SystemName": "runtime.schedule",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2683
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 12,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17046105,
+          "Line": [
+            {
+              "Function": {
+                "ID": 11,
+                "Name": "runtime.goschedImpl",
+                "SystemName": "runtime.goschedImpl",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2866
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 13,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17046739,
+          "Line": [
+            {
+              "Function": {
+                "ID": 12,
+                "Name": "runtime.gopreempt_m",
+                "SystemName": "runtime.gopreempt_m",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2894
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 14,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17227578,
+          "Line": [
+            {
+              "Function": {
+                "ID": 13,
+                "Name": "runtime.mcall",
+                "SystemName": "runtime.mcall",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/asm_amd64.s",
+                "StartLine": 0
+              },
+              "Line": 318
+            }
+          ],
+          "IsFolded": false
+        }
+      ],
+      "Value": [
+        1,
+        10000000
+      ],
+      "Label": null,
+      "NumLabel": null,
+      "NumUnit": null
+    },
+    {
+      "Location": [
+        {
+          "ID": 15,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17137655,
+          "Line": [
+            {
+              "Function": {
+                "ID": 14,
+                "Name": "runtime.nanotime1",
+                "SystemName": "runtime.nanotime1",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+                "StartLine": 0
+              },
+              "Line": 284
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 16,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17045252,
+          "Line": [
+            {
+              "Function": {
+                "ID": 15,
+                "Name": "runtime.nanotime",
+                "SystemName": "runtime.nanotime",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time_nofake.go",
+                "StartLine": 0
+              },
+              "Line": 19
+            },
+            {
+              "Function": {
+                "ID": 16,
+                "Name": "runtime.checkTimers",
+                "SystemName": "runtime.checkTimers",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2757
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 17,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17038697,
+          "Line": [
+            {
+              "Function": {
+                "ID": 9,
+                "Name": "runtime.findrunnable",
+                "SystemName": "runtime.findrunnable",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2289
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 11,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17044150,
+          "Line": [
+            {
+              "Function": {
+                "ID": 10,
+                "Name": "runtime.schedule",
+                "SystemName": "runtime.schedule",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2683
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 18,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17045596,
+          "Line": [
+            {
+              "Function": {
+                "ID": 17,
+                "Name": "runtime.park_m",
+                "SystemName": "runtime.park_m",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2851
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 14,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17227578,
+          "Line": [
+            {
+              "Function": {
+                "ID": 13,
+                "Name": "runtime.mcall",
+                "SystemName": "runtime.mcall",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/asm_amd64.s",
+                "StartLine": 0
+              },
+              "Line": 318
+            }
+          ],
+          "IsFolded": false
+        }
+      ],
+      "Value": [
+        1,
+        10000000
+      ],
+      "Label": null,
+      "NumLabel": null,
+      "NumUnit": null
+    },
+    {
+      "Location": [
+        {
+          "ID": 6,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17139096,
+          "Line": [
+            {
+              "Function": {
+                "ID": 5,
+                "Name": "runtime.pthread_cond_wait",
+                "SystemName": "runtime.pthread_cond_wait",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+                "StartLine": 0
+              },
+              "Line": 414
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 7,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 16994732,
+          "Line": [
+            {
+              "Function": {
+                "ID": 6,
+                "Name": "runtime.semasleep",
+                "SystemName": "runtime.semasleep",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/os_darwin.go",
+                "StartLine": 0
+              },
+              "Line": 63
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 8,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 16834054,
+          "Line": [
+            {
+              "Function": {
+                "ID": 7,
+                "Name": "runtime.notesleep",
+                "SystemName": "runtime.notesleep",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/lock_sema.go",
+                "StartLine": 0
+              },
+              "Line": 181
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 9,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17034852,
+          "Line": [
+            {
+              "Function": {
+                "ID": 8,
+                "Name": "runtime.stopm",
+                "SystemName": "runtime.stopm",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 1924
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 10,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17040958,
+          "Line": [
+            {
+              "Function": {
+                "ID": 9,
+                "Name": "runtime.findrunnable",
+                "SystemName": "runtime.findrunnable",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2485
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 11,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17044150,
+          "Line": [
+            {
+              "Function": {
+                "ID": 10,
+                "Name": "runtime.schedule",
+                "SystemName": "runtime.schedule",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2683
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 18,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17045596,
+          "Line": [
+            {
+              "Function": {
+                "ID": 17,
+                "Name": "runtime.park_m",
+                "SystemName": "runtime.park_m",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2851
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 14,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17227578,
+          "Line": [
+            {
+              "Function": {
+                "ID": 13,
+                "Name": "runtime.mcall",
+                "SystemName": "runtime.mcall",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/asm_amd64.s",
+                "StartLine": 0
+              },
+              "Line": 318
+            }
+          ],
+          "IsFolded": false
+        }
+      ],
+      "Value": [
+        2,
+        20000000
+      ],
+      "Label": null,
+      "NumLabel": null,
+      "NumUnit": null
+    },
+    {
+      "Location": [
+        {
+          "ID": 19,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17137496,
+          "Line": [
+            {
+              "Function": {
+                "ID": 18,
+                "Name": "runtime.write1",
+                "SystemName": "runtime.write1",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+                "StartLine": 0
+              },
+              "Line": 270
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 20,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 16993252,
+          "Line": [
+            {
+              "Function": {
+                "ID": 19,
+                "Name": "runtime.write",
+                "SystemName": "runtime.write",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time_nofake.go",
+                "StartLine": 0
+              },
+              "Line": 30
+            },
+            {
+              "Function": {
+                "ID": 20,
+                "Name": "runtime.netpollBreak",
+                "SystemName": "runtime.netpollBreak",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/netpoll_kqueue.go",
+                "StartLine": 0
+              },
+              "Line": 89
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 21,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17042487,
+          "Line": [
+            {
+              "Function": {
+                "ID": 21,
+                "Name": "runtime.wakeNetPoller",
+                "SystemName": "runtime.wakeNetPoller",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2521
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 22,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17142761,
+          "Line": [
+            {
+              "Function": {
+                "ID": 22,
+                "Name": "runtime.modtimer",
+                "SystemName": "runtime.modtimer",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+                "StartLine": 0
+              },
+              "Line": 480
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 23,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17139524,
+          "Line": [
+            {
+              "Function": {
+                "ID": 23,
+                "Name": "runtime.resettimer",
+                "SystemName": "runtime.resettimer",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+                "StartLine": 0
+              },
+              "Line": 529
+            },
+            {
+              "Function": {
+                "ID": 24,
+                "Name": "runtime.resetForSleep",
+                "SystemName": "runtime.resetForSleep",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+                "StartLine": 0
+              },
+              "Line": 197
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 24,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17045633,
+          "Line": [
+            {
+              "Function": {
+                "ID": 17,
+                "Name": "runtime.park_m",
+                "SystemName": "runtime.park_m",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 2840
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 14,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17227578,
+          "Line": [
+            {
+              "Function": {
+                "ID": 13,
+                "Name": "runtime.mcall",
+                "SystemName": "runtime.mcall",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/asm_amd64.s",
+                "StartLine": 0
+              },
+              "Line": 318
+            }
+          ],
+          "IsFolded": false
+        }
+      ],
+      "Value": [
+        7,
+        70000000
+      ],
+      "Label": null,
+      "NumLabel": null,
+      "NumUnit": null
+    },
+    {
+      "Location": [
+        {
+          "ID": 25,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17137424,
+          "Line": [
+            {
+              "Function": {
+                "ID": 25,
+                "Name": "runtime.usleep",
+                "SystemName": "runtime.usleep",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+                "StartLine": 0
+              },
+              "Line": 263
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 26,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17063084,
+          "Line": [
+            {
+              "Function": {
+                "ID": 26,
+                "Name": "runtime.sysmon",
+                "SystemName": "runtime.sysmon",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 4660
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 27,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17029287,
+          "Line": [
+            {
+              "Function": {
+                "ID": 27,
+                "Name": "runtime.mstart1",
+                "SystemName": "runtime.mstart1",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 1172
+            }
+          ],
+          "IsFolded": false
+        },
+        {
+          "ID": 28,
+          "Mapping": {
+            "ID": 1,
+            "Start": 0,
+            "Limit": 0,
+            "Offset": 0,
+            "File": "",
+            "BuildID": "",
+            "HasFunctions": true,
+            "HasFilenames": false,
+            "HasLineNumbers": false,
+            "HasInlineFrames": false
+          },
+          "Address": 17029061,
+          "Line": [
+            {
+              "Function": {
+                "ID": 28,
+                "Name": "runtime.mstart",
+                "SystemName": "runtime.mstart",
+                "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+                "StartLine": 0
+              },
+              "Line": 1137
+            }
+          ],
+          "IsFolded": false
+        }
+      ],
+      "Value": [
+        3,
+        30000000
+      ],
+      "Label": null,
+      "NumLabel": null,
+      "NumUnit": null
+    }
+  ],
+  "Mapping": [
+    {
+      "ID": 1,
+      "Start": 0,
+      "Limit": 0,
+      "Offset": 0,
+      "File": "",
+      "BuildID": "",
+      "HasFunctions": true,
+      "HasFilenames": false,
+      "HasLineNumbers": false,
+      "HasInlineFrames": false
+    }
+  ],
+  "Location": [
+    {
+      "ID": 1,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 20393855,
+      "Line": [
+        {
+          "Function": {
+            "ID": 1,
+            "Name": "main.computeSum",
+            "SystemName": "main.computeSum",
+            "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+            "StartLine": 0
+          },
+          "Line": 39
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 2,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 20394226,
+      "Line": [
+        {
+          "Function": {
+            "ID": 2,
+            "Name": "main.run.func2",
+            "SystemName": "main.run.func2",
+            "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+            "StartLine": 0
+          },
+          "Line": 31
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 3,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 20393208,
+      "Line": [
+        {
+          "Function": {
+            "ID": 3,
+            "Name": "golang.org/x/sync/errgroup.(*Group).Go.func1",
+            "SystemName": "golang.org/x/sync/errgroup.(*Group).Go.func1",
+            "Filename": "/Users/felix.geisendoerfer/go/pkg/mod/golang.org/x/sync@v0.0.0-20201207232520-09787c993a3a/errgroup/errgroup.go",
+            "StartLine": 0
+          },
+          "Line": 57
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 4,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17240512,
+      "Line": [
+        {
+          "Function": {
+            "ID": 4,
+            "Name": "runtime.asyncPreempt",
+            "SystemName": "runtime.asyncPreempt",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/preempt_amd64.s",
+            "StartLine": 0
+          },
+          "Line": 7
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 5,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 20393854,
+      "Line": [
+        {
+          "Function": {
+            "ID": 1,
+            "Name": "main.computeSum",
+            "SystemName": "main.computeSum",
+            "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+            "StartLine": 0
+          },
+          "Line": 37
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 6,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17139096,
+      "Line": [
+        {
+          "Function": {
+            "ID": 5,
+            "Name": "runtime.pthread_cond_wait",
+            "SystemName": "runtime.pthread_cond_wait",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+            "StartLine": 0
+          },
+          "Line": 414
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 7,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 16994732,
+      "Line": [
+        {
+          "Function": {
+            "ID": 6,
+            "Name": "runtime.semasleep",
+            "SystemName": "runtime.semasleep",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/os_darwin.go",
+            "StartLine": 0
+          },
+          "Line": 63
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 8,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 16834054,
+      "Line": [
+        {
+          "Function": {
+            "ID": 7,
+            "Name": "runtime.notesleep",
+            "SystemName": "runtime.notesleep",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/lock_sema.go",
+            "StartLine": 0
+          },
+          "Line": 181
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 9,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17034852,
+      "Line": [
+        {
+          "Function": {
+            "ID": 8,
+            "Name": "runtime.stopm",
+            "SystemName": "runtime.stopm",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 1924
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 10,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17040958,
+      "Line": [
+        {
+          "Function": {
+            "ID": 9,
+            "Name": "runtime.findrunnable",
+            "SystemName": "runtime.findrunnable",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2485
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 11,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17044150,
+      "Line": [
+        {
+          "Function": {
+            "ID": 10,
+            "Name": "runtime.schedule",
+            "SystemName": "runtime.schedule",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2683
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 12,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17046105,
+      "Line": [
+        {
+          "Function": {
+            "ID": 11,
+            "Name": "runtime.goschedImpl",
+            "SystemName": "runtime.goschedImpl",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2866
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 13,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17046739,
+      "Line": [
+        {
+          "Function": {
+            "ID": 12,
+            "Name": "runtime.gopreempt_m",
+            "SystemName": "runtime.gopreempt_m",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2894
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 14,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17227578,
+      "Line": [
+        {
+          "Function": {
+            "ID": 13,
+            "Name": "runtime.mcall",
+            "SystemName": "runtime.mcall",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/asm_amd64.s",
+            "StartLine": 0
+          },
+          "Line": 318
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 15,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17137655,
+      "Line": [
+        {
+          "Function": {
+            "ID": 14,
+            "Name": "runtime.nanotime1",
+            "SystemName": "runtime.nanotime1",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+            "StartLine": 0
+          },
+          "Line": 284
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 16,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17045252,
+      "Line": [
+        {
+          "Function": {
+            "ID": 15,
+            "Name": "runtime.nanotime",
+            "SystemName": "runtime.nanotime",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time_nofake.go",
+            "StartLine": 0
+          },
+          "Line": 19
+        },
+        {
+          "Function": {
+            "ID": 16,
+            "Name": "runtime.checkTimers",
+            "SystemName": "runtime.checkTimers",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2757
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 17,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17038697,
+      "Line": [
+        {
+          "Function": {
+            "ID": 9,
+            "Name": "runtime.findrunnable",
+            "SystemName": "runtime.findrunnable",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2289
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 18,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17045596,
+      "Line": [
+        {
+          "Function": {
+            "ID": 17,
+            "Name": "runtime.park_m",
+            "SystemName": "runtime.park_m",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2851
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 19,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17137496,
+      "Line": [
+        {
+          "Function": {
+            "ID": 18,
+            "Name": "runtime.write1",
+            "SystemName": "runtime.write1",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+            "StartLine": 0
+          },
+          "Line": 270
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 20,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 16993252,
+      "Line": [
+        {
+          "Function": {
+            "ID": 19,
+            "Name": "runtime.write",
+            "SystemName": "runtime.write",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time_nofake.go",
+            "StartLine": 0
+          },
+          "Line": 30
+        },
+        {
+          "Function": {
+            "ID": 20,
+            "Name": "runtime.netpollBreak",
+            "SystemName": "runtime.netpollBreak",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/netpoll_kqueue.go",
+            "StartLine": 0
+          },
+          "Line": 89
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 21,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17042487,
+      "Line": [
+        {
+          "Function": {
+            "ID": 21,
+            "Name": "runtime.wakeNetPoller",
+            "SystemName": "runtime.wakeNetPoller",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2521
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 22,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17142761,
+      "Line": [
+        {
+          "Function": {
+            "ID": 22,
+            "Name": "runtime.modtimer",
+            "SystemName": "runtime.modtimer",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+            "StartLine": 0
+          },
+          "Line": 480
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 23,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17139524,
+      "Line": [
+        {
+          "Function": {
+            "ID": 23,
+            "Name": "runtime.resettimer",
+            "SystemName": "runtime.resettimer",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+            "StartLine": 0
+          },
+          "Line": 529
+        },
+        {
+          "Function": {
+            "ID": 24,
+            "Name": "runtime.resetForSleep",
+            "SystemName": "runtime.resetForSleep",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+            "StartLine": 0
+          },
+          "Line": 197
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 24,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17045633,
+      "Line": [
+        {
+          "Function": {
+            "ID": 17,
+            "Name": "runtime.park_m",
+            "SystemName": "runtime.park_m",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 2840
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 25,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17137424,
+      "Line": [
+        {
+          "Function": {
+            "ID": 25,
+            "Name": "runtime.usleep",
+            "SystemName": "runtime.usleep",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+            "StartLine": 0
+          },
+          "Line": 263
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 26,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17063084,
+      "Line": [
+        {
+          "Function": {
+            "ID": 26,
+            "Name": "runtime.sysmon",
+            "SystemName": "runtime.sysmon",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 4660
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 27,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17029287,
+      "Line": [
+        {
+          "Function": {
+            "ID": 27,
+            "Name": "runtime.mstart1",
+            "SystemName": "runtime.mstart1",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 1172
+        }
+      ],
+      "IsFolded": false
+    },
+    {
+      "ID": 28,
+      "Mapping": {
+        "ID": 1,
+        "Start": 0,
+        "Limit": 0,
+        "Offset": 0,
+        "File": "",
+        "BuildID": "",
+        "HasFunctions": true,
+        "HasFilenames": false,
+        "HasLineNumbers": false,
+        "HasInlineFrames": false
+      },
+      "Address": 17029061,
+      "Line": [
+        {
+          "Function": {
+            "ID": 28,
+            "Name": "runtime.mstart",
+            "SystemName": "runtime.mstart",
+            "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+            "StartLine": 0
+          },
+          "Line": 1137
+        }
+      ],
+      "IsFolded": false
+    }
+  ],
+  "Function": [
+    {
+      "ID": 1,
+      "Name": "main.computeSum",
+      "SystemName": "main.computeSum",
+      "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 2,
+      "Name": "main.run.func2",
+      "SystemName": "main.run.func2",
+      "Filename": "/Users/felix.geisendoerfer/go/src/github.com/felixge/go-profiler-notes/examples/cpu/main.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 3,
+      "Name": "golang.org/x/sync/errgroup.(*Group).Go.func1",
+      "SystemName": "golang.org/x/sync/errgroup.(*Group).Go.func1",
+      "Filename": "/Users/felix.geisendoerfer/go/pkg/mod/golang.org/x/sync@v0.0.0-20201207232520-09787c993a3a/errgroup/errgroup.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 4,
+      "Name": "runtime.asyncPreempt",
+      "SystemName": "runtime.asyncPreempt",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/preempt_amd64.s",
+      "StartLine": 0
+    },
+    {
+      "ID": 5,
+      "Name": "runtime.pthread_cond_wait",
+      "SystemName": "runtime.pthread_cond_wait",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 6,
+      "Name": "runtime.semasleep",
+      "SystemName": "runtime.semasleep",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/os_darwin.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 7,
+      "Name": "runtime.notesleep",
+      "SystemName": "runtime.notesleep",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/lock_sema.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 8,
+      "Name": "runtime.stopm",
+      "SystemName": "runtime.stopm",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 9,
+      "Name": "runtime.findrunnable",
+      "SystemName": "runtime.findrunnable",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 10,
+      "Name": "runtime.schedule",
+      "SystemName": "runtime.schedule",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 11,
+      "Name": "runtime.goschedImpl",
+      "SystemName": "runtime.goschedImpl",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 12,
+      "Name": "runtime.gopreempt_m",
+      "SystemName": "runtime.gopreempt_m",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 13,
+      "Name": "runtime.mcall",
+      "SystemName": "runtime.mcall",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/asm_amd64.s",
+      "StartLine": 0
+    },
+    {
+      "ID": 14,
+      "Name": "runtime.nanotime1",
+      "SystemName": "runtime.nanotime1",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 15,
+      "Name": "runtime.nanotime",
+      "SystemName": "runtime.nanotime",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time_nofake.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 16,
+      "Name": "runtime.checkTimers",
+      "SystemName": "runtime.checkTimers",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 17,
+      "Name": "runtime.park_m",
+      "SystemName": "runtime.park_m",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 18,
+      "Name": "runtime.write1",
+      "SystemName": "runtime.write1",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 19,
+      "Name": "runtime.write",
+      "SystemName": "runtime.write",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time_nofake.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 20,
+      "Name": "runtime.netpollBreak",
+      "SystemName": "runtime.netpollBreak",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/netpoll_kqueue.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 21,
+      "Name": "runtime.wakeNetPoller",
+      "SystemName": "runtime.wakeNetPoller",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 22,
+      "Name": "runtime.modtimer",
+      "SystemName": "runtime.modtimer",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 23,
+      "Name": "runtime.resettimer",
+      "SystemName": "runtime.resettimer",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 24,
+      "Name": "runtime.resetForSleep",
+      "SystemName": "runtime.resetForSleep",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/time.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 25,
+      "Name": "runtime.usleep",
+      "SystemName": "runtime.usleep",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/sys_darwin.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 26,
+      "Name": "runtime.sysmon",
+      "SystemName": "runtime.sysmon",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 27,
+      "Name": "runtime.mstart1",
+      "SystemName": "runtime.mstart1",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    },
+    {
+      "ID": 28,
+      "Name": "runtime.mstart",
+      "SystemName": "runtime.mstart",
+      "Filename": "/usr/local/Cellar/go/1.15.6/libexec/src/runtime/proc.go",
+      "StartLine": 0
+    }
+  ],
+  "Comments": null,
+  "DropFrames": "",
+  "KeepFrames": "",
+  "TimeNanos": 1610122232116825000,
+  "DurationNanos": 3135113726,
+  "PeriodType": {
+    "Type": "cpu",
+    "Unit": "nanoseconds"
+  },
+  "Period": 10000000
+}

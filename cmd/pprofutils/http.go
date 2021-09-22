@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/felixge/httpsnoop"
+	"github.com/felixge/pprofutils/internal"
 	httptrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/julienschmidt/httprouter"
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )
@@ -22,12 +23,12 @@ const maxPostSize = 128 * 1024 * 1024
 func newHTTPServer() http.Handler {
 	router := httptrace.New()
 	router.HandlerFunc("GET", "/", func(w http.ResponseWriter, _ *http.Request) {
-		w.Header().Set("Location", "https://github.com/felixge/pprofutils")
+		w.Header().Set("Location", "https://github.com/felixge/pprofutils#readme")
 		w.WriteHeader(http.StatusFound)
 	})
 
-	for _, cmd := range utilCommands {
-		router.Handler("POST", "/"+cmd.Name, utilHandler(cmd))
+	for _, util := range internal.Utils {
+		router.Handler("POST", "/"+util.Name, utilHandler(util))
 	}
 
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +43,7 @@ func newHTTPServer() http.Handler {
 	})
 }
 
-func utilHandler(cmd UtilCommand) http.Handler {
+func utilHandler(util internal.Util) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var err error
 		span := addSpanTags(r)
@@ -51,7 +52,7 @@ func utilHandler(cmd UtilCommand) http.Handler {
 		}()
 
 		out := &bytes.Buffer{}
-		a := &UtilArgs{Output: out}
+		a := &internal.UtilArgs{Output: out}
 
 		upload := func() error {
 			var in io.Reader
@@ -89,7 +90,7 @@ func utilHandler(cmd UtilCommand) http.Handler {
 			a.Inputs = append(a.Inputs, inBuf)
 
 			a.Flags = make(map[string]interface{})
-			for name, flag := range cmd.Flags {
+			for name, flag := range util.Flags {
 				a.Flags[name] = flag.Default
 				if _, ok := r.URL.Query()[name]; !ok {
 					continue
@@ -119,7 +120,7 @@ func utilHandler(cmd UtilCommand) http.Handler {
 		}
 
 		execSpan, execCtx := tracer.StartSpanFromContext(r.Context(), "exec")
-		err = cmd.Execute(execCtx, a)
+		err = util.Execute(execCtx, a)
 		execSpan.Finish(tracer.WithError(err))
 		if err != nil {
 			http.Error(w, fmt.Sprintf("error: %s\n", err), http.StatusBadRequest)

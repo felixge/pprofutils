@@ -12,6 +12,7 @@ import (
 	"sort"
 	"time"
 
+	"github.com/felixge/pprofutils/internal"
 	"github.com/peterbourgon/ff/v3/ffcli"
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 	"gopkg.in/DataDog/dd-trace-go.v1/profiler"
@@ -40,7 +41,7 @@ func run() error {
 		tracing      = serveFlagSet.Bool("tracing", false, "Enable tracing.")
 	)
 
-	for _, util := range utilCommands {
+	for _, util := range internal.Utils {
 		ffCommands = append(ffCommands, ffCommand(util))
 	}
 
@@ -104,10 +105,10 @@ func run() error {
 	return rootCmd.ParseAndRun(context.Background(), os.Args[1:])
 }
 
-func ffCommand(cmd UtilCommand) *ffcli.Command {
-	fs := flag.NewFlagSet("pprofutils "+cmd.Name, flag.ExitOnError)
+func ffCommand(util internal.Util) *ffcli.Command {
+	fs := flag.NewFlagSet("pprofutils "+util.Name, flag.ExitOnError)
 	flags := map[string]interface{}{}
-	for name, bf := range cmd.Flags {
+	for name, bf := range util.Flags {
 		val := bf.Default
 		switch vt := val.(type) {
 		case bool:
@@ -120,10 +121,10 @@ func ffCommand(cmd UtilCommand) *ffcli.Command {
 	}
 
 	return &ffcli.Command{
-		Name:       cmd.Name,
-		ShortUsage: fmt.Sprintf("pprofutils %s %s", cmd.Name, cmd.ShortUsage),
-		ShortHelp:  cmd.ShortHelp,
-		LongHelp:   cmd.LongHelp,
+		Name:       util.Name,
+		ShortUsage: fmt.Sprintf("pprofutils %s %s", util.Name, util.ShortUsage),
+		ShortHelp:  util.ShortHelp,
+		LongHelp:   util.LongHelp,
 		FlagSet:    fs,
 		Exec: func(ctx context.Context, args []string) error {
 			in, out, err := openInputOutput(args)
@@ -133,7 +134,7 @@ func ffCommand(cmd UtilCommand) *ffcli.Command {
 			defer in.Close()
 			defer out.Close()
 
-			a := &UtilArgs{}
+			a := &internal.UtilArgs{}
 			inBuf, err := ioutil.ReadAll(in)
 			if err != nil {
 				return err
@@ -150,7 +151,7 @@ func ffCommand(cmd UtilCommand) *ffcli.Command {
 				}
 			}
 
-			return cmd.Execute(ctx, a)
+			return util.Execute(ctx, a)
 		},
 	}
 }
