@@ -6,7 +6,7 @@
 pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md). You can use it as a command line utility or as a free web service.
 
 - [**Install**](#install)
-- [**Utilities**](#utilities): [avg](#avg) · [folded](#folded) · [json](#json) · [labelframes](#labelframes) · [raw](#raw)
+- [**Utilities**](#utilities): [anon](#anon) · [avg](#avg) · [folded](#folded) · [json](#json) · [labelframes](#labelframes) · [raw](#raw)
 - [**Use Cases**](#use-cases): [Convert linux perf profiles to pprof](#convert-linux-perf-profiles-to-pprof)
 - [**License**](#license)
 
@@ -22,11 +22,53 @@ Alternatively you can use it as a free web service hosted at https://pprof.to.
 
 ## Utilities
 
+### anon
+
+Takes a pprof profile and anonymizes it by replacing pkg, file and function
+names with human readable hashes. The whitelist can be used to prevent certain
+packages from being anonymized.
+
+TODO: Ignore all stdlib packages by default and maybe also popular OSS libs.
+
+The input and output file default to "-" which means stdin or stdout.
+
+#### Use anon utility via cli
+
+```
+pprofutils anon [-whitelist=<regex>] <input file> <output file>
+
+FLAGS:
+  -whitelist=^runtime;^net;^encoding Semicolon separated pkg name regex list
+```
+
+#### Use anon utility via web service
+
+```
+curl --data-binary @<input file> pprof.to/anon?whitelist=^runtime;^net;^encoding > <output file>
+```
+
+#### Example 1: Anonymize a CPU profile
+```shell
+pprofutils anon examples/anon.in.pprof examples/anon.out.pprof
+# or
+curl --data-binary @examples/anon.in.pprof pprof.to/anon > examples/anon.out.pprof
+```
+Converts the profile [examples/anon.in.pprof](./examples/anon.in.pprof) that looks like this:
+
+![](examples/anon.in.png)
+
+Into a new profile [examples/anon.out.pprof](./examples/anon.out.pprof) that looks like this:
+
+![](examples/anon.out.png)
+
+
 ### avg
 
 Takes a block or mutex profile and creates a profile that contains the average
 time per contention by dividing the nanoseconds or value in the profile by the
 sample count value.
+
+TODO: Support memory profiles.
 
 The input and output file default to "-" which means stdin or stdout.
 

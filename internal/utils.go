@@ -47,6 +47,31 @@ Converts pprof to the same text format as go tool pprof -raw.
 		},
 	},
 	{
+		Name: "anon",
+		Flags: map[string]UtilFlag{
+			"whitelist": {"^runtime;^net;^encoding", "Semicolon separated pkg name regex list"},
+		},
+		ShortUsage: "[-whitelist=<regex>] <input file> <output file>",
+		ShortHelp:  "Anonymizes a pprof profile",
+		LongHelp: strings.TrimSpace(`
+Takes a pprof profile and anonymizes it by replacing pkg, file and function
+names with human readable hashes. The whitelist can be used to prevent certain
+packages from being anonymized.
+
+TODO: Ignore all stdlib packages by default and maybe also popular OSS libs.
+`) + commonSuffix,
+		Examples: []Example{
+			{Name: "Anonymize a CPU profile", In: []string{"pprof", "png"}, Out: []string{"pprof", "png"}},
+		},
+		Execute: func(ctx context.Context, a *UtilArgs) error {
+			return (&utils.Anon{
+				Input:     a.Inputs[0],
+				Output:    a.Output,
+				Whitelist: a.Flags["whitelist"].(string),
+			}).Execute(ctx)
+		},
+	},
+	{
 		Name:       "avg",
 		ShortUsage: "<input file> <output file>",
 		ShortHelp:  "Creates a profile with the average value per sample",
@@ -54,6 +79,8 @@ Converts pprof to the same text format as go tool pprof -raw.
 Takes a block or mutex profile and creates a profile that contains the average
 time per contention by dividing the nanoseconds or value in the profile by the
 sample count value.
+
+TODO: Support memory profiles.
 `) + commonSuffix,
 		Examples: []Example{
 			{Name: "Convert block profile to avg time", In: []string{"pprof", "png"}, Out: []string{"pprof", "png"}},
