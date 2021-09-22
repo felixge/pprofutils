@@ -15,7 +15,7 @@ pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go
 pprofutils requires Go 1.16 and can be installed like this:
 
 ```
-go install github.com/felixge/pprofutils/cmd/pprofutils/v2@latest
+go install github.com/felixge/pprofutils/v2/cmd/pprofutils@latest
 ```
 
 Alternatively you can use it as a free web service hosted at https://pprof.to.
