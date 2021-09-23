@@ -37,6 +37,11 @@ func newHTTPServer() http.Handler {
 		http.NotFoundHandler().ServeHTTP(w, r)
 	})
 
+	router.MethodNotAllowed = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		addSpanTags(r)
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+	})
+
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Service-Version", version)
 		m := httpsnoop.CaptureMetrics(router, w, r)
