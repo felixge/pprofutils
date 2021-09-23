@@ -22,7 +22,8 @@ const maxPostSize = 128 * 1024 * 1024
 
 func newHTTPServer() http.Handler {
 	router := httptrace.New()
-	router.HandlerFunc("GET", "/", func(w http.ResponseWriter, _ *http.Request) {
+	router.HandlerFunc("GET", "/", func(w http.ResponseWriter, r *http.Request) {
+		addSpanTags(r)
 		w.Header().Set("Location", "https://github.com/felixge/pprofutils#readme")
 		w.WriteHeader(http.StatusFound)
 	})
@@ -32,11 +33,11 @@ func newHTTPServer() http.Handler {
 	}
 
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		addSpanTags(r)
 		http.NotFoundHandler().ServeHTTP(w, r)
 	})
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		addSpanTags(r)
 		w.Header().Set("Service-Version", version)
 		m := httpsnoop.CaptureMetrics(router, w, r)
 		log.Printf("%d %s %s %s", m.Code, r.Method, r.URL, m.Duration)
@@ -45,6 +46,8 @@ func newHTTPServer() http.Handler {
 
 func utilHandler(util internal.Util) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		addSpanTags(r)
+
 		var err error
 		span, _ := tracer.SpanFromContext(r.Context())
 		defer func() {
