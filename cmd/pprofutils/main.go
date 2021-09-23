@@ -57,6 +57,13 @@ func run() error {
 					profiler.WithVersion(version),
 					profiler.CPUDuration(60 * time.Second),
 					profiler.WithPeriod(60 * time.Second),
+					profiler.WithProfileTypes(
+						profiler.CPUProfile,
+						profiler.HeapProfile,
+						profiler.BlockProfile,
+						profiler.MutexProfile,
+						profiler.GoroutineProfile,
+					),
 				}
 				if err := profiler.Start(profilerOptions...); err != nil {
 					return err
