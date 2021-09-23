@@ -33,12 +33,14 @@ func newHTTPServer() http.Handler {
 	}
 
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		addSpanTags(r)
+		span := addSpanTags(r)
+		defer span.Finish(tracer.WithError(errors.New(http.StatusText(http.StatusNotFound))))
 		http.NotFoundHandler().ServeHTTP(w, r)
 	})
 
 	router.MethodNotAllowed = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		addSpanTags(r)
+		span := addSpanTags(r)
+		defer span.Finish(tracer.WithError(errors.New(http.StatusText(http.StatusMethodNotAllowed))))
 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 	})
 
@@ -141,10 +143,11 @@ func utilHandler(util internal.Util) http.Handler {
 	})
 }
 
-func addSpanTags(r *http.Request) {
+func addSpanTags(r *http.Request) tracer.Span {
 	span, _ := tracer.SpanFromContext(r.Context())
 	span.SetTag("http.full_url", r.URL.String())
 	span.SetTag("http.content_length", r.Header.Get("Content-Length"))
 	span.SetTag("user.ip", r.Header.Get("Fly-Client-IP"))
 	span.SetTag("user.agent", r.Header.Get("User-Agent"))
+	return span
 }
