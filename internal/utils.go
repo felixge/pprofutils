@@ -5,6 +5,7 @@ import (
 	"io"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/felixge/pprofutils/v2/utils"
 )
@@ -134,6 +135,27 @@ is useful to visualize label values in a flamegraph.
 				Input:  a.Inputs[0],
 				Output: a.Output,
 				Label:  a.Flags["label"].(string),
+			}).Execute(ctx)
+		},
+	},
+	{
+		Name: "heapage",
+		Flags: map[string]UtilFlag{
+			"period": {10 * time.Second, "The time period covered by the heap profile."},
+		},
+		ShortUsage: "-period=<period> <input file> <output file>",
+		ShortHelp:  "Adds virtual frames showing the average allocation lifetime for Go memory allocations.",
+		LongHelp: strings.TrimSpace(`
+Adds virtual frames showing the average allocation lifetime for Go memory allocations.
+`) + commonSuffix,
+		Examples: []Example{
+			{Name: "Calculate Avg Inuse Object Age", In: []string{"pprof", "png"}, Out: []string{"pprof", "png"}},
+		},
+		Execute: func(ctx context.Context, a *UtilArgs) error {
+			return (&utils.Heapage{
+				Input:  a.Inputs[0],
+				Output: a.Output,
+				Period: a.Flags["period"].(time.Duration),
 			}).Execute(ctx)
 		},
 	},

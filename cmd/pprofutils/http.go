@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/felixge/httpsnoop"
 	"github.com/felixge/pprofutils/v2/internal"
@@ -108,6 +109,12 @@ func utilHandler(util internal.Util) http.Handler {
 
 				qVal := r.URL.Query().Get(name)
 				switch flag.Default.(type) {
+				case time.Duration:
+					dur, err := time.ParseDuration(qVal)
+					if err != nil {
+						return fmt.Errorf("bad query param %s: %w", name, err)
+					}
+					a.Flags[name] = dur
 				case bool:
 					val, err := strconv.ParseBool(qVal)
 					if err != nil {
