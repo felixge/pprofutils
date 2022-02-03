@@ -6,7 +6,7 @@
 pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md). You can use it as a command line utility or as a free web service.
 
 - [**Install**](#install)
-- [**Utilities**](#utilities): [anon](#anon) · [avg](#avg) · [folded](#folded) · [json](#json) · [labelframes](#labelframes) · [raw](#raw)
+- [**Utilities**](#utilities): [anon](#anon) · [avg](#avg) · [folded](#folded) · [heapage](#heapage) · [json](#json) · [labelframes](#labelframes) · [raw](#raw)
 - [**Use Cases**](#use-cases): [Convert linux perf profiles to pprof](#convert-linux-perf-profiles-to-pprof)
 - [**License**](#license)
 
@@ -157,6 +157,42 @@ main;foo;bar 3
 
 ```
 
+
+
+### heapage
+
+Adds virtual frames showing the average allocation lifetime for Go memory allocations.
+
+The input and output file default to "-" which means stdin or stdout.
+
+#### Use heapage utility via cli
+
+```
+pprofutils heapage -period=<period> <input file> <output file>
+
+FLAGS:
+  -period=10s The time period covered by the heap profile.
+```
+
+#### Use heapage utility via web service
+
+```
+curl --data-binary @<input file> 'pprof.to/heapage?period=10s' > <output file>
+```
+
+#### Example 1: Calculate Avg Inuse Object Age
+```shell
+pprofutils heapage examples/heapage.in.pprof examples/heapage.out.pprof
+# or
+curl --data-binary @examples/heapage.in.pprof pprof.to/heapage > examples/heapage.out.pprof
+```
+Converts the profile [examples/heapage.in.pprof](./examples/heapage.in.pprof) that looks like this:
+
+![](examples/heapage.in.png)
+
+Into a new profile [examples/heapage.out.pprof](./examples/heapage.out.pprof) that looks like this:
+
+![](examples/heapage.out.png)
 
 
 ### json

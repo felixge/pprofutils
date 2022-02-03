@@ -118,6 +118,9 @@ func ffCommand(util internal.Util) *ffcli.Command {
 	for name, bf := range util.Flags {
 		val := bf.Default
 		switch vt := val.(type) {
+		case time.Duration:
+			fs.DurationVar(&vt, name, vt, bf.Usage)
+			flags[name] = &vt
 		case bool:
 			fs.BoolVar(&vt, name, vt, bf.Usage)
 			flags[name] = &vt
@@ -151,6 +154,8 @@ func ffCommand(util internal.Util) *ffcli.Command {
 			a.Flags = make(map[string]interface{})
 			for k, v := range flags {
 				switch vt := v.(type) {
+				case *time.Duration:
+					a.Flags[k] = *vt
 				case *bool:
 					a.Flags[k] = *vt
 				case *string:
