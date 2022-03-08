@@ -60,9 +60,9 @@ func (c Text) Convert(text io.Reader) (*profile.Profile, error) {
 			continue
 		}
 
-		parts := strings.Split(line, " ")
-		if len(parts) != len(p.SampleType)+1 {
-			return nil, fmt.Errorf("bad line: %d: %q", n, line)
+		parts, err := splitLastN(line, len(p.SampleType))
+		if err != nil {
+			return nil, err
 		}
 
 		stack := strings.Split(parts[0], ";")
@@ -110,4 +110,26 @@ func looksLikeHeader(line string) bool {
 		}
 	}
 	return true
+}
+
+// split line from bottom up given expected number of spaces
+func splitLastN(line string, n int) ([]string, error) {
+	parts := make([]string, n+1)
+
+	for i, j := len(line)-1, len(line); i >= 0 && n > 0; i-- {
+		if line[i] == ' ' {
+			parts[n] = line[i+1 : j]
+			j = i
+			n--
+		}
+		if n == 0 {
+			parts[n] = line[:i]
+		}
+	}
+
+	if n > 0 {
+		return nil, fmt.Errorf("bad line: %q", line)
+	}
+
+	return parts, nil
 }
