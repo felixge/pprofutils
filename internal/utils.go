@@ -159,6 +159,23 @@ Adds virtual frames showing the average allocation lifetime for Go memory alloca
 			}).Execute(ctx)
 		},
 	},
+	{
+		Name:       "jemalloc",
+		ShortUsage: "<input file> <output file>",
+		ShortHelp:  "Converts jemalloc text format to pprof format",
+		LongHelp: strings.TrimSpace(`
+Converts jemalloc heap profile to pprof format.
+`) + commonSuffix,
+		Examples: []Example{
+			{Name: "Convert jemalloc to pprof", In: []string{"txt"}, Out: []string{"pprof", "png"}},
+		},
+		Execute: func(ctx context.Context, a *UtilArgs) error {
+			return (&utils.Jemalloc{
+				Input:  a.Inputs[0],
+				Output: a.Output,
+			}).Execute(ctx)
+		},
+	},
 }
 
 func init() {
