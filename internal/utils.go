@@ -99,7 +99,7 @@ TODO: Support memory profiles.
 			"headers":      {false, "Add header column for each sample type"},
 			"line_numbers": {false, "Add line numbers to the name of each frame"},
 		},
-		ShortUsage: "[-headers] <input file> <output file>",
+		ShortUsage: "[-headers] [-line_numbers] <input file> <output file>",
 		ShortHelp:  "Converts pprof to Brendan Gregg's folded text format and vice versa",
 		LongHelp: strings.TrimSpace(`
 Converts pprof to Brendan Gregg's folded text format and vice versa. The input
