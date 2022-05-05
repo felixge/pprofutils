@@ -53,4 +53,24 @@ main.run.func1;main.threadKind.Run;main.goGo0;main.goHog;runtime.asyncPreempt 1
 `) + "\n"
 		is.Equal(out.String(), want)
 	})
+
+	t.Run("line numbers in output", func(t *testing.T) {
+		is := is.New(t)
+		data, err := ioutil.ReadFile(filepath.Join("test-fixtures", "pprof.lines.pb.gz"))
+		is.NoErr(err)
+
+		proto, err := profile.Parse(bytes.NewReader(data))
+		is.NoErr(err)
+
+		out := bytes.Buffer{}
+		is.NoErr(Protobuf{LineNumbers: true}.Convert(proto, &out))
+		want := strings.TrimSpace(`
+main.run.func1:62;main.threadKind.Run:96;main.goGo1:106;main.goHog:128 85
+main.run.func1:62;main.threadKind.Run:96;main.goGo2:109;main.goHog:128 78
+main.run.func1:62;main.threadKind.Run:96;main.goGo3:112;main.goHog:128 72
+main.run.func1:62;main.threadKind.Run:96;main.goGo0:103;main.goHog:128 72
+main.run.func1:62;main.threadKind.Run:96;main.goGo0:103;main.goHog:128;runtime.asyncPreempt:8 1
+`) + "\n"
+		is.Equal(out.String(), want)
+	})
 }
