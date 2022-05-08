@@ -109,10 +109,11 @@ The input and output file default to "-" which means stdin or stdout.
 #### Use folded utility via cli
 
 ```
-pprofutils folded [-headers] <input file> <output file>
+pprofutils folded [-headers] [-line_numbers] <input file> <output file>
 
 FLAGS:
-  -headers=false Add header column for each sample type
+  -headers=false       Add header column for each sample type
+  -line_numbers=false  Add line numbers to the name of each frame
 ```
 
 #### Use folded utility via web service

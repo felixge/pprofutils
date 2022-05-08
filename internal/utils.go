@@ -96,9 +96,10 @@ TODO: Support memory profiles.
 	{
 		Name: "folded",
 		Flags: map[string]UtilFlag{
-			"headers": {false, "Add header column for each sample type"},
+			"headers":      {false, "Add header column for each sample type"},
+			"line_numbers": {false, "Add line numbers to the name of each frame"},
 		},
-		ShortUsage: "[-headers] <input file> <output file>",
+		ShortUsage: "[-headers] [-line_numbers] <input file> <output file>",
 		ShortHelp:  "Converts pprof to Brendan Gregg's folded text format and vice versa",
 		LongHelp: strings.TrimSpace(`
 Converts pprof to Brendan Gregg's folded text format and vice versa. The input
@@ -110,9 +111,10 @@ format is automatically detected and used to determine the output format.
 		},
 		Execute: func(ctx context.Context, a *UtilArgs) error {
 			return (&utils.Folded{
-				Input:   a.Inputs[0],
-				Output:  a.Output,
-				Headers: a.Flags["headers"].(bool),
+				Input:       a.Inputs[0],
+				Output:      a.Output,
+				Headers:     a.Flags["headers"].(bool),
+				LineNumbers: a.Flags["line_numbers"].(bool),
 			}).Execute(ctx)
 		},
 	},

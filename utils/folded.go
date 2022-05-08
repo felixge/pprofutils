@@ -10,9 +10,10 @@ import (
 )
 
 type Folded struct {
-	Input   []byte
-	Output  io.Writer
-	Headers bool
+	Input       []byte
+	Output      io.Writer
+	Headers     bool
+	LineNumbers bool
 }
 
 func (f *Folded) Execute(ctx context.Context) error {
@@ -20,6 +21,7 @@ func (f *Folded) Execute(ctx context.Context) error {
 	if err == nil {
 		p := legacy.Protobuf{
 			SampleTypes: f.Headers,
+			LineNumbers: f.LineNumbers,
 		}
 		return p.Convert(prof, f.Output)
 	}

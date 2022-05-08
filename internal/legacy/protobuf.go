@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/google/pprof/profile"
@@ -16,6 +17,8 @@ type Protobuf struct {
 	// the sample types found in the profile. This is a custom extension to the
 	// folded text format.
 	SampleTypes bool
+	// LineNumbers causes the text output to include line numbers for each frame
+	LineNumbers bool
 }
 
 // Convert marshals the given protobuf profile into folded text format.
@@ -28,7 +31,7 @@ func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 		}
 		w.WriteString(strings.Join(sampleTypes, " ") + "\n")
 	}
-	if err := protobuf.Aggregate(true, true, false, false, false); err != nil {
+	if err := protobuf.Aggregate(true, true, false, p.LineNumbers, false); err != nil {
 		return err
 	}
 	protobuf = protobuf.Compact()
@@ -41,7 +44,11 @@ func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 			loc := sample.Location[len(sample.Location)-i-1]
 			for j := range loc.Line {
 				line := loc.Line[len(loc.Line)-j-1]
-				frames = append(frames, line.Function.Name)
+				name := line.Function.Name
+				if p.LineNumbers {
+					name = name + ":" + strconv.FormatInt(line.Line, 10)
+				}
+				frames = append(frames, name)
 			}
 		}
 		var values []string
