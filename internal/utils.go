@@ -126,6 +126,8 @@ format is automatically detected and used to determine the output format.
 		ShortUsage: "-label=<label> <input file> <output file>",
 		ShortHelp:  "Adds virtual root frames for the given pprof label",
 		LongHelp: strings.TrimSpace(`
+DEPRECATED: Use pprof -tagleaf or -tagroot instead.
+
 Adds virtual root frames for the each value of the selected pprof label. This
 is useful to visualize label values in a flamegraph.
 `) + commonSuffix,
@@ -168,9 +170,6 @@ Adds virtual frames showing the average allocation lifetime for Go memory alloca
 		LongHelp: strings.TrimSpace(`
 Converts jemalloc heap profile to pprof format.
 `) + commonSuffix,
-		Examples: []Example{
-			{Name: "Convert jemalloc to pprof", In: []string{"txt"}, Out: []string{"pprof", "png"}},
-		},
 		Execute: func(ctx context.Context, a *UtilArgs) error {
 			return (&utils.Jemalloc{
 				Input:  a.Inputs[0],
