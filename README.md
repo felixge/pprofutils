@@ -6,7 +6,7 @@
 pprofutils is a swiss army knife for [pprof files](https://github.com/DataDog/go-profiler-notes/blob/main/pprof.md). You can use it as a command line utility or as a free web service.
 
 - [**Install**](#install)
-- [**Utilities**](#utilities): [anon](#anon) · [avg](#avg) · [folded](#folded) · [heapage](#heapage) · [json](#json) · [labelframes](#labelframes) · [raw](#raw)
+- [**Utilities**](#utilities): [anon](#anon) · [avg](#avg) · [folded](#folded) · [heapage](#heapage) · [jemalloc](#jemalloc) · [json](#json) · [labelframes](#labelframes) · [raw](#raw)
 - [**Use Cases**](#use-cases): [Convert linux perf profiles to pprof](#convert-linux-perf-profiles-to-pprof)
 - [**License**](#license)
 
@@ -112,14 +112,14 @@ The input and output file default to "-" which means stdin or stdout.
 pprofutils folded [-headers] [-line_numbers] <input file> <output file>
 
 FLAGS:
-  -headers=false       Add header column for each sample type
-  -line_numbers=false  Add line numbers to the name of each frame
+  -headers=false Add header column for each sample type
+  -line_numbers=false Add line numbers to the name of each frame
 ```
 
 #### Use folded utility via web service
 
 ```
-curl --data-binary @<input file> 'pprof.to/folded?headers=false' > <output file>
+curl --data-binary @<input file> 'pprof.to/folded?headers=false&line_numbers=false' > <output file>
 ```
 
 #### Example 1: Convert folded text to pprof
@@ -196,6 +196,26 @@ Into a new profile [examples/heapage.out.pprof](./examples/heapage.out.pprof) th
 ![](examples/heapage.out.png)
 
 
+### jemalloc
+
+Converts jemalloc heap profile to pprof format.
+
+The input and output file default to "-" which means stdin or stdout.
+
+#### Use jemalloc utility via cli
+
+```
+pprofutils jemalloc <input file> <output file>
+```
+
+#### Use jemalloc utility via web service
+
+```
+curl --data-binary @<input file> 'pprof.to/jemalloc' > <output file>
+```
+
+
+
 ### json
 
 Converts from pprof to json and vice vera. The input format is automatically
@@ -232,6 +252,8 @@ See [examples/json.in.json](./examples/json.in.json) and [examples/json.out.ppro
 
 
 ### labelframes
+
+DEPRECATED: Use pprof -tagleaf or -tagroot instead.
 
 Adds virtual root frames for the each value of the selected pprof label. This
 is useful to visualize label values in a flamegraph.
