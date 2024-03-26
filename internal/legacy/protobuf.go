@@ -31,7 +31,7 @@ func (p Protobuf) Convert(protobuf *profile.Profile, text io.Writer) error {
 		}
 		w.WriteString(strings.Join(sampleTypes, " ") + "\n")
 	}
-	if err := protobuf.Aggregate(true, true, false, p.LineNumbers, false); err != nil {
+	if err := protobuf.Aggregate(true, true, false, p.LineNumbers, false, false); err != nil {
 		return err
 	}
 	protobuf = protobuf.Compact()
